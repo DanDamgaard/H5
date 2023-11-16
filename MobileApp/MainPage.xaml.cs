@@ -20,6 +20,7 @@ namespace MobileApp
            var response = await httpClient.GetAsync($"{baseUrl}/WeatherForecast");
 
             var data = await response.Content.ReadAsStringAsync();
+
         }
   
     }
