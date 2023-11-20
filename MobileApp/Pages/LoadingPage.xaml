@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             x:Class="MobileApp.Pages.LoadingPage"
+             Title="LoadingPage">
+    <Page.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="White" StatusBarStyle="LightContent" />
+    </Page.Behaviors>
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <ActivityIndicator IsRunning="True"></ActivityIndicator>
+        <Label Text="Tjekker om du er logget ind!!"></Label>
+    </VerticalStackLayout>
+</ContentPage>

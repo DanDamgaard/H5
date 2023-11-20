@@ -1,13 +1,17 @@
-﻿using static System.Net.WebRequestMethods;
+﻿using MobileApp.Pages;
+using MobileApp.Services;
+using static System.Net.WebRequestMethods;
 
 namespace MobileApp
 {
     public partial class MainPage : ContentPage
     {
-    
-        public MainPage()
+        private readonly AuthService _authService;
+
+        public MainPage(AuthService authService)
         {
             InitializeComponent();
+            _authService = authService;
         }
 
         private async void OnCallApiBtnClicked(object sender, EventArgs e)
@@ -21,7 +25,12 @@ namespace MobileApp
 
             var data = await response.Content.ReadAsStringAsync();
         }
-  
+
+        private async void logoutBtn_Clicked(object sender, EventArgs e)
+        {
+            _authService.logout();
+            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+        }
     }
 
 }

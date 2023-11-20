@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.Pages.LoginPage"
+             Title="LoginPage">
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20" Spacing="20">
+        
+        
+        <Image Source="logo.png"></Image>
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="emailBox" Placeholder="E-mail" HeightRequest="40" Completed="emailBox_Completed" Margin="10,0,0,0"/>
+        </Frame>
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="passBox" Placeholder="Adgangskode" IsPassword="True" Completed="passBox_Completed" HeightRequest="40" Margin="10,0,0,0"/>
+        </Frame>
+
+        <Button x:Name="LoginBtn" Clicked="LoginBtn_Clicked" Text="Login"></Button>
+    </VerticalStackLayout>
+</ContentPage>
