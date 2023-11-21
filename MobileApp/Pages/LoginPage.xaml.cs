@@ -1,3 +1,4 @@
+
 using MobileApp.Classes;
 using MobileApp.Services;
 
@@ -40,5 +41,10 @@ public partial class LoginPage : ContentPage
     private void emailBox_Completed(object sender, EventArgs e)
     {
         passBox.Focus();
+    }
+
+    private async void registerBtn_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushModalAsync(new RegisterPage());
     }
 }

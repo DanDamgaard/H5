@@ -5,7 +5,7 @@
              x:Class="MobileApp.Pages.LoadingPage"
              Title="LoadingPage">
     <Page.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="White" StatusBarStyle="LightContent" />
+        <mct:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" />
     </Page.Behaviors>
     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
         <ActivityIndicator IsRunning="True"></ActivityIndicator>
