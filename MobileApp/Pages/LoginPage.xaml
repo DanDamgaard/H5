@@ -15,5 +15,9 @@
         </Frame>
 
         <Button x:Name="LoginBtn" Clicked="LoginBtn_Clicked" Text="Login"></Button>
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Registre dig "></Label>
+            <Button x:Name="registerBtn" TextColor="Black"  FontAttributes="Bold" HeightRequest="20" WidthRequest="25" Background="Transparent" Margin="0,0" Padding="0" Text="Her" Clicked="registerBtn_Clicked"></Button>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

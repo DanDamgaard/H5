@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MobileApp.Pages.RegisterPage"
+             Title="RegisterPage">
+    <VerticalStackLayout HorizontalOptions="Center" Padding="20" Spacing="20">
+        
+        <Label Text="Navn og adresse" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+        
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="nameBox" Placeholder="Fulde navn" HeightRequest="40" Margin="10,0,0,0">
+                <Entry.Behaviors>
+                    <toolkit:TextValidationBehavior
+                        x:Name="nameValidator"
+                        Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                        MinimumLength="6"
+                        />
+                </Entry.Behaviors>
+            </Entry>
+        </Frame>
+
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="addressBox" Placeholder="Adresse" HeightRequest="40" Margin="10,0,0,0">
+                <Entry.Behaviors>
+                    <toolkit:TextValidationBehavior
+                        x:Name="addressValidator"
+                        Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                        MinimumLength="6"
+                        />
+                </Entry.Behaviors>
+            </Entry>
+        </Frame>
+        
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="phoneBox" Placeholder="Telefon nummer" Keyboard="Numeric" HeightRequest="40" Margin="10,0,0,0" >
+            <Entry.Behaviors>
+                <toolkit:NumericValidationBehavior
+                    Flags="None"
+                    />
+                </Entry.Behaviors>
+            </Entry>
+        </Frame>
+
+        <Label Text="Login" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="emailBox" Placeholder="E-mail" HeightRequest="40" Margin="10,0,0,0">
+                <Entry.Behaviors>
+                    <toolkit:MultiValidationBehavior 
+                        x:Name="emailValidator"
+                        Flags="ValidateOnAttaching,ValidateOnValueChanged">
+                        
+                        <toolkit:TextValidationBehavior
+                            Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                            MinimumLength="1"
+                            toolkit:MultiValidationBehavior.Error="Du skal skrive en E-mail"
+                        />
+                        <toolkit:EmailValidationBehavior
+                            Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                            toolkit:MultiValidationBehavior.Error="E-mail format er forkert"
+                        />
+                    </toolkit:MultiValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
+        </Frame>
+
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="passBox" Placeholder="Adgangskode" IsPassword="True" HeightRequest="40" Margin="10,0,0,0">
+                <Entry.Behaviors>
+                    <toolkit:MultiValidationBehavior
+                        x:Name="passValidator"
+                        Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                        >
+                        <toolkit:TextValidationBehavior
+                            MinimumLength="8"
+                            toolkit:MultiValidationBehavior.Error="Din adgangskode skal være 8 karakter lang"
+                            />
+                        <toolkit:CharactersValidationBehavior 
+                            CharacterType="Digit" 
+                            MinimumCharacterTypeCount="1" 
+                            toolkit:MultiValidationBehavior.Error="Du skal bruge mindst 1 tal"
+                            />
+                        <toolkit:CharactersValidationBehavior 
+                            CharacterType="UppercaseLetter" 
+                            MinimumCharacterTypeCount="1" 
+                            toolkit:MultiValidationBehavior.Error="Du skal bruge minst 1 stor bogstav i din adgangskode"
+                            />
+                        
+                    </toolkit:MultiValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
+        </Frame>
+
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="repeatBox" Placeholder="Gentag adgangskode" IsPassword="True" HeightRequest="40" Margin="10,0,0,0"/>
+        </Frame>
+
+        <Button x:Name="registerBtn" Clicked="registerBtn_Clicked" Text="registrer dig"></Button>
+    </VerticalStackLayout>
+</ContentPage>
