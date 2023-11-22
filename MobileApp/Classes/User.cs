@@ -13,11 +13,11 @@ namespace MobileApp.Classes
         private string _name;
         private string _password;
         private string _email;
-        private int _phone;
+        private string _phone;
         private string _address;
-        private bool _role;
+        private int _role;
 
-        public User(int id, string name, string password, string email, int phone, string address, bool role)
+        public User(int id, string name, string password, string email, string phone, string address, int role)
         {
             _id = id;
             _name = name;
@@ -32,9 +32,9 @@ namespace MobileApp.Classes
         public string Name { get { return _name; } }
         public string Password { get { return _password; } }
         public string Email { get { return _email; } }
-        public int Phone { get { return _phone; } }
+        public string Phone { get { return _phone; } }
         public string Address { get { return _address; } }
-        public bool Role { get { return _role;}
+        public int Role { get { return _role;}
         }
     }
 }

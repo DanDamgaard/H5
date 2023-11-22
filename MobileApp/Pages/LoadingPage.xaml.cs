@@ -5,11 +5,13 @@ namespace MobileApp.Pages;
 public partial class LoadingPage : ContentPage
 {
     private readonly AuthService _authService;
+    private readonly Api _api;
 
-    public LoadingPage(AuthService authService)
+    public LoadingPage(AuthService authService, Api api)
 	{
 		InitializeComponent();
         _authService = authService;
+        _api = api;
     }
 
     protected async override void OnNavigatedTo(NavigatedToEventArgs args)
@@ -18,6 +20,12 @@ public partial class LoadingPage : ContentPage
 
         if (await _authService.isAuthenticatedAsync())
         {
+            string user = Preferences.Default.Get("EmailKey", "Unknown");
+            string pass = Preferences.Default.Get("PassKey", "Unknown");
+
+            if (await _api.Login(user, pass)){
+                
+            };
             // hvis man er logget in redirect til mainPage
             await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
 

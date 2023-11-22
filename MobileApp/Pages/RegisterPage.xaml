@@ -73,8 +73,8 @@
                         Flags="ValidateOnAttaching,ValidateOnValueChanged"
                         >
                         <toolkit:TextValidationBehavior
-                            MinimumLength="8"
-                            toolkit:MultiValidationBehavior.Error="Din adgangskode skal være 8 karakter lang"
+                            MinimumLength="6"
+                            toolkit:MultiValidationBehavior.Error="Din adgangskode skal være 6 karakter lang"
                             />
                         <toolkit:CharactersValidationBehavior 
                             CharacterType="Digit" 

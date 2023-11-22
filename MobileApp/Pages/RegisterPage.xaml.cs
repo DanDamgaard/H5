@@ -1,31 +1,36 @@
 using MobileApp.Classes;
+using MobileApp.Services;
+using System.Net.Http.Json;
 
 namespace MobileApp.Pages;
 
 public partial class RegisterPage : ContentPage
 {
-	public RegisterPage()
+	private Api api;
+    public RegisterPage()
 	{
 		InitializeComponent();
-	}
+    }
 
-    private void registerBtn_Clicked(object sender, EventArgs e)
+    private async void registerBtn_Clicked(object sender, EventArgs e)
     {
+		HttpClient client = new HttpClient();
+
 		if (nameValidator.IsNotValid)
 		{
-			DisplayAlert("Fejl", "Du skal skrive din fulde navn", "Ok");
+			await DisplayAlert("Fejl", "Du skal skrive din fulde navn", "Ok");
 			return;
 		}
 
 		if (addressValidator.IsNotValid)
 		{
-			DisplayAlert("Fejl", "Du skal skrive en adresse", "OK");
+			await DisplayAlert("Fejl", "Du skal skrive en adresse", "OK");
 			return;
 		}
 
 		if (String.IsNullOrEmpty(phoneBox.Text) || int.Parse(phoneBox.Text) < 11111111)
 		{
-			DisplayAlert("Fejl", "Du skal skrive en gyldig Tlf. nr", "OK");
+			await DisplayAlert("Fejl", "Du skal skrive en gyldig Tlf. nr", "OK");
 			return;
 		}
 
@@ -33,7 +38,7 @@ public partial class RegisterPage : ContentPage
 		{
 			foreach (var error in emailValidator.Errors)
 			{
-				DisplayAlert("Fejl", error.ToString(), "OK");
+				await DisplayAlert("Fejl", error.ToString(), "OK");
 			}
 			return;
 		}
@@ -42,7 +47,7 @@ public partial class RegisterPage : ContentPage
 		{
 			foreach (var error in passValidator.Errors)
 			{
-				DisplayAlert("Fejl", error.ToString(), "OK");
+				await DisplayAlert("Fejl", error.ToString(), "OK");
 			}
 
 			return;
@@ -50,12 +55,19 @@ public partial class RegisterPage : ContentPage
 
 		if(passBox.Text != repeatBox.Text)
 		{
-			DisplayAlert("Fejl", "Dine adgangskoder skal være ens", "OK");
+			await DisplayAlert("Fejl", "Dine adgangskoder skal være ens", "OK");
 			return;
 		}
 
-		User user = new User(0,nameBox.Text,passBox.Text,emailBox.Text,int.Parse(phoneBox.Text),addressBox.Text,false);
+		
+		User user = new User(0,nameBox.Text,passBox.Text,emailBox.Text,phoneBox.Text,addressBox.Text, 0);
 
+		if(await api.CreateUser(user))
+		{
+			await DisplayAlert("Succes", "Din bruger er blevet oprettet", "OK");
+            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+        }
+		
 
 	}
 }

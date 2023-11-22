@@ -15,17 +15,16 @@ namespace MobileApp.Services
             return loginState;
         }
 
-        public void login(int id)
+        public void login()
         {
             Preferences.Default.Set("loginState", true);
-            Preferences.Default.Set("userId", id);
         }
 
         public void logout()
         {
             Preferences.Default.Remove("loginState");
-            Preferences.Default.Remove("userId");
-
+            Preferences.Default.Remove("EmailKey");
+            Preferences.Default.Remove("PassKey");
 
         }
     }

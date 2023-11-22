@@ -33,6 +33,7 @@ namespace MobileApp
 #endif
             builder.Logging.AddDebug();
             builder.Services.AddTransient<AuthService>();
+            builder.Services.AddTransient<Api>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<LoadingPage>();
             builder.Services.AddTransient<MainPage>();

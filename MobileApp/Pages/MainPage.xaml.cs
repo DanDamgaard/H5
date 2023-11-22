@@ -1,3 +1,4 @@
+using MobileApp.Classes;
 using MobileApp.Services;
 
 namespace MobileApp.Pages;
@@ -6,10 +7,13 @@ public partial class MainPage : ContentPage
 {
     private readonly AuthService _authService;
 
+    private User user = Global.User;
     public MainPage(AuthService authService)
     {
         InitializeComponent();
         _authService = authService;
+        UserLabel.Text = user.Name;
+        
     }
 
     private async void OnCallApiBtnClicked(object sender, EventArgs e)
