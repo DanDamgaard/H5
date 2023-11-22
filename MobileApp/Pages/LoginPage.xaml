@@ -4,7 +4,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MobileApp.Pages.LoginPage"
              Title="LoginPage">
-    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20" Spacing="20">
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20" Spacing="30">
         
         
         <Image Source="logo.png"></Image>

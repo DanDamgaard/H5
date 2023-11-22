@@ -6,7 +6,7 @@ namespace MobileApp.Pages;
 
 public partial class RegisterPage : ContentPage
 {
-	private Api api;
+	private Api api = new Api();
     public RegisterPage()
 	{
 		InitializeComponent();
@@ -60,13 +60,18 @@ public partial class RegisterPage : ContentPage
 		}
 
 		
-		User user = new User(0,nameBox.Text,passBox.Text,emailBox.Text,phoneBox.Text,addressBox.Text, 0);
+		User user = new User(0,nameBox.Text, passBox.Text, emailBox.Text, phoneBox.Text, addressBox.Text, 0);
 
 		if(await api.CreateUser(user))
 		{
 			await DisplayAlert("Succes", "Din bruger er blevet oprettet", "OK");
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-        }
+		}
+		else
+		{
+			await DisplayAlert("Fejl", "Kunne ikke lave bruger prøv igen", "OK");
+			return;
+		}
 		
 
 	}
