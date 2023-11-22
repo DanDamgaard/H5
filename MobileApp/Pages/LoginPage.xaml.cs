@@ -1,31 +1,65 @@
-
 using MobileApp.Classes;
 using MobileApp.Services;
+using Newtonsoft.Json;
 
 namespace MobileApp.Pages;
 
 public partial class LoginPage : ContentPage
 {
     private readonly AuthService _authService;
+    private readonly Api _api;
 
-    public LoginPage(AuthService authService)
+    public LoginPage(AuthService authService, Api api)
 	{
 		InitializeComponent();
         _authService = authService;
+        _api = api;
     }
 
     private async void login()
     {
-        User user = new User(1, "User", "Password", "email", 123456798, "address", false);
 
-        if (emailBox.Text == user.Email && passBox.Text == user.Password)
+        if (emailValidator.IsNotValid)
         {
-            _authService.login(user.Id);
-            await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+            foreach (var error in emailValidator.Errors)
+            {
+                await DisplayAlert("Fejl", error.ToString(), "OK");
+            }
+            return;
         }
 
-        emailBox.Text = "";
-        passBox.Text = "";
+        if (passValidator.IsNotValid)
+        {
+            foreach (var error in passValidator.Errors)
+            {
+                await DisplayAlert("Fejl", error.ToString(), "OK");
+            }
+
+            return;
+        }
+           
+        if(await _api.Login(emailBox.Text, passBox.Text)){
+
+            Preferences.Default.Set("EmailKey", emailBox.Text);
+            Preferences.Default.Set("PassKey", passBox.Text);
+
+            emailBox.Text = "";
+            passBox.Text = "";
+
+            _authService.login();
+
+
+            string eKey = emailBox.Text;
+
+            await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+        }
+        else
+        {
+            await DisplayAlert("Login Fejlet", "Kan ikke finde bruger tjek om du har skrevet din login rigtigt", "OK");
+        }
+        
+
+        
     }
     
     private void LoginBtn_Clicked(object sender, EventArgs e)

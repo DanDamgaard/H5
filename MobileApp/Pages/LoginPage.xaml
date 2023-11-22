@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MobileApp.Pages.LoginPage"
              Title="LoginPage">
     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20" Spacing="20">
@@ -8,10 +9,48 @@
         
         <Image Source="logo.png"></Image>
         <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
-            <Entry x:Name="emailBox" Placeholder="E-mail" HeightRequest="40" Completed="emailBox_Completed" Margin="10,0,0,0"/>
+            <Entry x:Name="emailBox" Placeholder="E-mail" HeightRequest="40" Completed="emailBox_Completed" Margin="10,0,0,0">
+                <Entry.Behaviors>
+                    <toolkit:MultiValidationBehavior 
+                        x:Name="emailValidator"
+                        Flags="ValidateOnAttaching,ValidateOnValueChanged">
+
+                        <toolkit:TextValidationBehavior
+                            Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                            MinimumLength="1"
+                            toolkit:MultiValidationBehavior.Error="Du skal skrive en E-mail"
+                        />
+                        <toolkit:EmailValidationBehavior
+                            Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                            toolkit:MultiValidationBehavior.Error="E-mail format er forkert"
+                        />
+                    </toolkit:MultiValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
         </Frame>
         <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
-            <Entry x:Name="passBox" Placeholder="Adgangskode" IsPassword="True" Completed="passBox_Completed" HeightRequest="40" Margin="10,0,0,0"/>
+            <Entry x:Name="passBox" Placeholder="Adgangskode" IsPassword="True" Completed="passBox_Completed" HeightRequest="40" Margin="10,0,0,0">
+                <Entry.Behaviors>
+                    <toolkit:MultiValidationBehavior
+                        x:Name="passValidator"
+                        Flags="ValidateOnAttaching,ValidateOnValueChanged">
+                        <toolkit:TextValidationBehavior
+                            MinimumLength="6"
+                            toolkit:MultiValidationBehavior.Error="Din adgangskode skal være 6 karakter lang"
+                        />
+                        <toolkit:CharactersValidationBehavior 
+                            CharacterType="Digit" 
+                            MinimumCharacterTypeCount="1" 
+                            toolkit:MultiValidationBehavior.Error="Du skal bruge mindst 1 tal"
+                        />
+                        <toolkit:CharactersValidationBehavior 
+                            CharacterType="UppercaseLetter" 
+                            MinimumCharacterTypeCount="1" 
+                            toolkit:MultiValidationBehavior.Error="Du skal bruge minst 1 stor bogstav i din adgangskode"
+                        />
+                    </toolkit:MultiValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
         </Frame>
 
         <Button x:Name="LoginBtn" Clicked="LoginBtn_Clicked" Text="Login"></Button>

@@ -8,6 +8,7 @@
             Padding="30,0"
             VerticalOptions="Center">
 
+        <Label x:Name="UserLabel"></Label>
         <Button x:Name="logoutBtn" Clicked="logoutBtn_Clicked" Text="Log ud"></Button>
 
     </VerticalStackLayout>
