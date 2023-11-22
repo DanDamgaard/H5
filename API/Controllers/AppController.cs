@@ -16,7 +16,7 @@ namespace API.Controllers
         }
 
         // Create a user
-        [HttpPost]
+        [HttpPost("AddUser")]
         public async Task<ActionResult<User>> AddUser(User user)
         {
             if (user != null)
@@ -29,11 +29,11 @@ namespace API.Controllers
         }
 
         // Get all users
-        [HttpGet]
+        [HttpGet("GetUsers")]
         public async Task<ActionResult<List<User>>> GetUsers() => Ok(await appDbContext.User.ToListAsync());
 
         // Get a user by Id
-        [HttpGet("{id}")]
+        [HttpGet("GetUserById/{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
             var user = await appDbContext.User.FindAsync(id);
@@ -41,7 +41,7 @@ namespace API.Controllers
         }
 
         // Update user data
-        [HttpPut("{id}")]
+        [HttpPut("UpdateUser/{id}")]
         public async Task<ActionResult<User>> UpdateUser(int id, User updatedUser)
         {
             var existingUser = await appDbContext.User.FindAsync(id);
@@ -65,7 +65,7 @@ namespace API.Controllers
         }
 
         // Delete a user
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteUser/{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
             var user = await appDbContext.User.FindAsync(id);
@@ -82,7 +82,7 @@ namespace API.Controllers
         }
 
         // Login
-        [HttpGet("{email}/{password}")]
+        [HttpGet("Login/{email}/{password}")]
         public async Task<ActionResult<User>> Login(string email, string password)
         {
             if (email is not null && password is not null)
@@ -90,8 +90,23 @@ namespace API.Controllers
                 var user = await appDbContext.User
                     .Where(x => x.Email!.ToLower().Equals(email.ToLower()) && x.Password == password)
                     .FirstOrDefaultAsync();
-                return user != null ? Ok(user) : NotFound("User not found");        
+                return user != null ? Ok(user) : NotFound("User not found");
             }
+            return BadRequest("Invalid Request");
+        }
+
+        // Check if an email is used
+        [HttpGet("CheckEmail/{email}")]
+        public async Task<ActionResult<bool>> CheckEmail(string email)
+        {
+            if (email is not null)
+            {
+                var userWithEmailExists = await appDbContext.User
+                    .AnyAsync(x => x.Email!.ToLower() == email.ToLower());
+
+                return Ok(userWithEmailExists);
+            }
+
             return BadRequest("Invalid Request");
         }
     }
