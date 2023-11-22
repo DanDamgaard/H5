@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Classes="clr-namespace:MobileApp.Classes"
              x:Class="MobileApp.Pages.MainPage"
              Title="MainPage">
     <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
-            VerticalOptions="Center">
+            >
 
-        <Label x:Name="UserLabel"></Label>
-        <Button x:Name="logoutBtn" Clicked="logoutBtn_Clicked" Text="Log ud"></Button>
+        <HorizontalStackLayout>
+            <Button x:Name="userBtn" Text="Konto"  TextColor="Black" Padding="0" Background="Transparent" WidthRequest="40" Clicked="userBtn_Clicked"></Button>
+            <Button HorizontalOptions="Start" TextColor="Black" Padding="0" Margin="0,0" WidthRequest="15" Background="Transparent" HeightRequest="18" FontFamily="FaRegular" Clicked="userBtn_Clicked" Text="{ x:Static Classes:FaRegular.User}"></Button>
+        </HorizontalStackLayout>
+        <Button x:Name="logoutBtn" VerticalOptions="End" Clicked="logoutBtn_Clicked" Text="Log ud"></Button>
 
     </VerticalStackLayout>
 </ContentPage>

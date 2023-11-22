@@ -7,12 +7,11 @@ public partial class MainPage : ContentPage
 {
     private readonly AuthService _authService;
 
-    private User user = Global.User;
+    
     public MainPage(AuthService authService)
     {
         InitializeComponent();
         _authService = authService;
-        UserLabel.Text = user.Name;
         
     }
 
@@ -32,5 +31,10 @@ public partial class MainPage : ContentPage
     {
         _authService.logout();
         await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+    }
+
+    private async void userBtn_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushModalAsync(new AccountPage());
     }
 }
