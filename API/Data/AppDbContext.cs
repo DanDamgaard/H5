@@ -9,6 +9,9 @@ namespace API.Data
         {
         }
 
-        public DbSet<User> User { get; set; } 
+        public DbSet<User> User { get; set; }
+        public DbSet<Book> Book { get; set; }
+        public DbSet<Author> Author { get; set; }
+
     }
 }
