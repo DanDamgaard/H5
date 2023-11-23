@@ -5,8 +5,8 @@
              Title="AccountPage">
     <VerticalStackLayout Spacing="25" Padding="30">
         
-            <Label x:Name="UserLabel" VerticalOptions="Start" HorizontalOptions="Center" Text="navn"/>
-        
-        
+        <Label x:Name="UserLabel" VerticalOptions="Start" HorizontalOptions="Center" Text="navn"/>
+        <Button x:Name="logoutBtn" VerticalOptions="End" HorizontalOptions="Center" Clicked="logoutBtn_Clicked" Text="Log ud"></Button>
     </VerticalStackLayout>
+    
 </ContentPage>

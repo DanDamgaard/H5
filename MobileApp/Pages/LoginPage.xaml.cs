@@ -1,6 +1,8 @@
 using MobileApp.Classes;
 using MobileApp.Services;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MobileApp.Pages;
 
@@ -14,6 +16,22 @@ public partial class LoginPage : ContentPage
 		InitializeComponent();
         _authService = authService;
         _api = api;
+    }
+
+    private string Hash(string str)
+    {
+        StringBuilder Sb = new StringBuilder();
+
+        using (var hash = SHA256.Create())
+        {
+            Encoding enc = Encoding.UTF8;
+            byte[] result = hash.ComputeHash(enc.GetBytes(str));
+
+            foreach (byte b in result)
+                Sb.Append(b.ToString("x2"));
+        }
+
+        return Sb.ToString();
     }
 
     private async void login()
@@ -37,11 +55,13 @@ public partial class LoginPage : ContentPage
 
             return;
         }
+
+        string hashPass = Hash(passBox.Text);
            
-        if(await _api.Login(emailBox.Text, passBox.Text)){
+        if(await _api.Login(emailBox.Text, hashPass)){
 
             Preferences.Default.Set("EmailKey", emailBox.Text);
-            Preferences.Default.Set("PassKey", passBox.Text);
+            Preferences.Default.Set("PassKey", hashPass);
 
             emailBox.Text = "";
             passBox.Text = "";
