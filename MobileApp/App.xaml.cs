@@ -1,4 +1,6 @@
-﻿namespace MobileApp
+﻿using MobileApp.Pages;
+
+namespace MobileApp
 {
     public partial class App : Application
     {

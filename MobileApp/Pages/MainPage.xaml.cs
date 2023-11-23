@@ -5,13 +5,12 @@ namespace MobileApp.Pages;
 
 public partial class MainPage : ContentPage
 {
-    private readonly AuthService _authService;
+    private readonly AuthService _authService = new AuthService();
 
     
-    public MainPage(AuthService authService)
+    public MainPage()
     {
         InitializeComponent();
-        _authService = authService;
         
     }
 
@@ -27,10 +26,10 @@ public partial class MainPage : ContentPage
         var data = await response.Content.ReadAsStringAsync();
     }
 
-    private async void logoutBtn_Clicked(object sender, EventArgs e)
+    private void logoutBtn_Clicked(object sender, EventArgs e)
     {
         _authService.logout();
-        await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+        Application.Current.MainPage = new LoginPage();
     }
 
     private async void userBtn_Clicked(object sender, EventArgs e)

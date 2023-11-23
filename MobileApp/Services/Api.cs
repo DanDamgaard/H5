@@ -61,5 +61,19 @@ namespace MobileApp.Services
 
             return answer;
         }
+
+        public async Task<bool> updateUser(User user)
+        {
+            var response = await httpClient.PutAsJsonAsync($"{baseUrl}/api/App/UpdateUser/{user.Id}",user);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

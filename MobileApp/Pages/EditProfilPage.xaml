@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MobileApp.Pages.EditProfilPage"
+             Title="EditProfilPage">
+    <VerticalStackLayout Padding="25" Spacing="25">
+        <Label Text="Ret Profil" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="nameBox" Placeholder="Fulde navn" HeightRequest="40" Margin="10,0,0,0">
+                <Entry.Behaviors>
+                    <toolkit:TextValidationBehavior
+            x:Name="nameValidator"
+            Flags="ValidateOnAttaching,ValidateOnValueChanged"
+            MinimumLength="6"
+            />
+                </Entry.Behaviors>
+            </Entry>
+        </Frame>
+
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="addressBox" Placeholder="Adresse" HeightRequest="40" Margin="10,0,0,0">
+                <Entry.Behaviors>
+                    <toolkit:TextValidationBehavior
+            x:Name="addressValidator"
+            Flags="ValidateOnAttaching,ValidateOnValueChanged"
+            MinimumLength="6"
+            />
+                </Entry.Behaviors>
+            </Entry>
+        </Frame>
+
+        <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+            <Entry x:Name="phoneBox" Placeholder="Telefon nummer" Keyboard="Numeric" HeightRequest="40" Margin="10,0,0,0" >
+                <Entry.Behaviors>
+                    <toolkit:NumericValidationBehavior
+        Flags="None"
+        />
+                </Entry.Behaviors>
+            </Entry>
+        </Frame>
+
+        <Button x:Name="UpdateProfilBtn" Clicked="UpdateProfilBtn_Clicked" Text="Ret profil"></Button>
+
+    </VerticalStackLayout>
+</ContentPage>
