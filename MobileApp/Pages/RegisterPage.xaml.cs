@@ -1,6 +1,8 @@
 using MobileApp.Classes;
 using MobileApp.Services;
 using System.Net.Http.Json;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MobileApp.Pages;
 
@@ -10,6 +12,22 @@ public partial class RegisterPage : ContentPage
     public RegisterPage()
 	{
 		InitializeComponent();
+    }
+
+	private string Hash(string str)
+	{
+        StringBuilder Sb = new StringBuilder();
+
+        using (var hash = SHA256.Create())
+        {
+            Encoding enc = Encoding.UTF8;
+            byte[] result = hash.ComputeHash(enc.GetBytes(str));
+
+            foreach (byte b in result)
+                Sb.Append(b.ToString("x2"));
+        }
+
+        return Sb.ToString();
     }
 
     private async void registerBtn_Clicked(object sender, EventArgs e)
@@ -59,8 +77,15 @@ public partial class RegisterPage : ContentPage
 			return;
 		}
 
+		if(await api.doesEmailExit(emailBox.Text))
+		{
+			await DisplayAlert("Fejl", "E-mail er blevet brugt før skriv en anden E-mail", "OK");
+			return;
+		}
+
+		string hashPass = Hash(passBox.Text);
 		
-		User user = new User(0,nameBox.Text, passBox.Text, emailBox.Text, phoneBox.Text, addressBox.Text, 0);
+		User user = new User(0,nameBox.Text, hashPass, emailBox.Text.ToLower(), phoneBox.Text, addressBox.Text, 0);
 
 		if(await api.CreateUser(user))
 		{

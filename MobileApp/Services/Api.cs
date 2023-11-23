@@ -21,7 +21,7 @@ namespace MobileApp.Services
             string email = username;
             email.Replace("@", "%40");
 
-            var response = await httpClient.GetAsync($"{baseUrl}/api/App/{email}/{password}");
+            var response = await httpClient.GetAsync($"{baseUrl}/api/App/Login/{email}/{password}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -31,16 +31,13 @@ namespace MobileApp.Services
                 return true;
             }else
             {
-                var result = await response.Content.ReadAsStringAsync();
-                User data = JsonConvert.DeserializeObject<User>(result);
-                Global.User = data;
                 return false;
             }
         }
 
         public async Task<bool> CreateUser(User user)
         {
-            var response = await httpClient.PostAsJsonAsync($"{baseUrl}/api/App/",user);
+            var response = await httpClient.PostAsJsonAsync($"{baseUrl}/api/App/AddUser",user);
 
             if (response.IsSuccessStatusCode)
             {
@@ -50,6 +47,19 @@ namespace MobileApp.Services
             {
                 return false;
             }
+        }
+
+        public async Task<bool> doesEmailExit(string email)
+        {
+            email.Replace("@", "%40");
+
+            var response = await httpClient.GetAsync($"{baseUrl}/api/App/CheckEmail/{email}");
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            bool answer = JsonConvert.DeserializeObject<bool>(result);
+
+            return answer;
         }
     }
 }
