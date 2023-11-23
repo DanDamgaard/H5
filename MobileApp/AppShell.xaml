@@ -10,15 +10,19 @@
 
     <ShellContent
         Title="Loading"
-        ContentTemplate="{DataTemplate Pages:LoadingPage}"
-        Route="LoadingPage" />
+        ContentTemplate="{DataTemplate Pages:LoadingPage}"/>
     <ShellContent
         Title="Login"
-        ContentTemplate="{DataTemplate Pages:LoginPage}"
-        Route="LoginPage" />
+        ContentTemplate="{DataTemplate Pages:LoginPage}"/>
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate Pages:MainPage}"
         Route="MainPage" />
+    <ShellContent
+        Title="Account"
+        ContentTemplate="{DataTemplate Pages:AccountPage}"/>
+        <ShellContent
+        Title="Profil"
+        ContentTemplate="{DataTemplate Pages:ProfilPage}"/>
 
 </Shell>

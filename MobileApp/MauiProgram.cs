@@ -41,6 +41,7 @@ namespace MobileApp
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<LoadingPage>();
             builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<AccountPage>();
 
             return builder.Build();
         }

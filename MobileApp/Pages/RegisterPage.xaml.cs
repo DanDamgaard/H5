@@ -32,8 +32,6 @@ public partial class RegisterPage : ContentPage
 
     private async void registerBtn_Clicked(object sender, EventArgs e)
     {
-		HttpClient client = new HttpClient();
-
 		if (nameValidator.IsNotValid)
 		{
 			await DisplayAlert("Fejl", "Du skal skrive din fulde navn", "Ok");
@@ -90,7 +88,7 @@ public partial class RegisterPage : ContentPage
 		if(await api.CreateUser(user))
 		{
 			await DisplayAlert("Succes", "Din bruger er blevet oprettet", "OK");
-            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            await Navigation.PushModalAsync(new LoginPage());
 		}
 		else
 		{

@@ -8,14 +8,13 @@ namespace MobileApp.Pages;
 
 public partial class LoginPage : ContentPage
 {
-    private readonly AuthService _authService;
-    private readonly Api _api;
+    private readonly AuthService _authService = new AuthService();
+    private readonly Api _api = new Api();
 
-    public LoginPage(AuthService authService, Api api)
+    public LoginPage()
 	{
 		InitializeComponent();
-        _authService = authService;
-        _api = api;
+        //Application.Current.MainPage = new LoginPage();
     }
 
     private string Hash(string str)
@@ -57,8 +56,10 @@ public partial class LoginPage : ContentPage
         }
 
         string hashPass = Hash(passBox.Text);
-           
-        if(await _api.Login(emailBox.Text, hashPass)){
+
+        //string hashPass = passBox.Text;
+
+        if (await _api.Login(emailBox.Text, hashPass)){
 
             Preferences.Default.Set("EmailKey", emailBox.Text);
             Preferences.Default.Set("PassKey", hashPass);
@@ -68,10 +69,8 @@ public partial class LoginPage : ContentPage
 
             _authService.login();
 
+            Application.Current.MainPage = new MainPage();
 
-            string eKey = emailBox.Text;
-
-            await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
         }
         else
         {

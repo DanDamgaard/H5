@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.Pages.EditLoginPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="EditLoginPage">
+    <Grid RowDefinitions="*,*" Padding="25" RowSpacing="25" >
+
+        <StackLayout Grid.Row="0" Spacing="20">
+            <Label Text="Ret Login" HorizontalOptions="Center" FontSize="30" FontAttributes="Bold" TextDecorations="Underline"></Label>
+            <Frame WidthRequest="250" HeightRequest="50" Padding="0">
+                <Entry x:Name="emailBox" HeightRequest="40" Margin="10,0,0,0">
+                    <Entry.Behaviors>
+                        <toolkit:MultiValidationBehavior 
+                x:Name="emailValidator"
+                Flags="ValidateOnAttaching,ValidateOnValueChanged">
+
+                            <toolkit:TextValidationBehavior
+                    Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                    MinimumLength="1"
+                    toolkit:MultiValidationBehavior.Error="Du skal skrive en E-mail"
+                />
+                            <toolkit:EmailValidationBehavior
+                    Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                    toolkit:MultiValidationBehavior.Error="E-mail format er forkert"
+                />
+                        </toolkit:MultiValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
+            </Frame>
+            <Frame WidthRequest="250" HeightRequest="50" Padding="0">
+                <Entry x:Name="passBox" Placeholder="Adgangskode" IsPassword="True" HeightRequest="40" Margin="10,0,0,0">
+                    <Entry.Behaviors>
+                        <toolkit:MultiValidationBehavior
+                x:Name="passValidator"
+                Flags="ValidateOnAttaching,ValidateOnValueChanged">
+                            <toolkit:TextValidationBehavior
+                    MinimumLength="6"
+                    toolkit:MultiValidationBehavior.Error="Din adgangskode skal være 6 karakter lang"
+                />
+                            <toolkit:CharactersValidationBehavior 
+                    CharacterType="Digit" 
+                    MinimumCharacterTypeCount="1" 
+                    toolkit:MultiValidationBehavior.Error="Du skal bruge mindst 1 tal"
+                />
+                            <toolkit:CharactersValidationBehavior 
+                    CharacterType="UppercaseLetter" 
+                    MinimumCharacterTypeCount="1" 
+                    toolkit:MultiValidationBehavior.Error="Du skal bruge minst 1 stor bogstav i din adgangskode"
+                />
+                        </toolkit:MultiValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
+            </Frame>
+            <Frame WidthRequest="250" HeightRequest="50" Padding="0">
+                <Entry x:Name="repeatBox" IsPassword="True" Placeholder="Gentag adgangskode" HeightRequest="40" Margin="10,0,0,0">
+                </Entry>
+            </Frame>
+        </StackLayout>
+        
+        <Button x:Name="updateUserBtn" Grid.Row="1" HeightRequest="50" Text="Opdater login" Clicked="updateUserBtn_Clicked"></Button>
+    </Grid>
+</ContentPage>

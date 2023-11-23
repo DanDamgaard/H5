@@ -23,23 +23,24 @@ public partial class LoadingPage : ContentPage
             string user = Preferences.Default.Get("EmailKey", "Unknown");
             string pass = Preferences.Default.Get("PassKey", "Unknown");
 
-           if (await _api.Login(user, pass))
+            if (await _api.Login(user, pass))
             {
-                await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+                Application.Current.MainPage = new MainPage();
             }
             else
             {
-                await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+                Application.Current.MainPage = new LoginPage();
                 _authService.logout();
             }
-            // hvis man er logget in redirect til mainPage
-            
+            //hvis man er logget in redirect til mainPage
+
+
 
         }
         else
         {
             //hvis man ikke er logget in redirect til loginPage
-            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            Application.Current.MainPage = new LoginPage();
         }
 
     }

@@ -3,10 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApp.Pages.AccountPage"
              Title="AccountPage">
-    <VerticalStackLayout Spacing="25" Padding="30">
+   
+
+        <Grid RowDefinitions="*,*" Padding="25" RowSpacing="25" >
+            <StackLayout Grid.Row="0" Spacing="25" VerticalOptions="Start">
+                <Label x:Name="UserLabel"  HorizontalOptions="Center" Text="navn"/>
+                <Button x:Name="profilBtn" Clicked="profilBtn_Clicked"  Text="Se profil"></Button>
+                <Button x:Name="editLoginBtn" Clicked="editLoginBtn_Clicked"  Text="Ret Login"></Button>
+            </StackLayout>
+            
+            <Button Grid.Row="1" HeightRequest="50" x:Name="logoutBtn" Clicked="logoutBtn_Clicked" Text="Log ud"></Button>
+        </Grid>
         
-        <Label x:Name="UserLabel" VerticalOptions="Start" HorizontalOptions="Center" Text="navn"/>
-        <Button x:Name="logoutBtn" VerticalOptions="End" HorizontalOptions="Center" Clicked="logoutBtn_Clicked" Text="Log ud"></Button>
-    </VerticalStackLayout>
-    
+            
 </ContentPage>
