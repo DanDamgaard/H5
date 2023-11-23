@@ -13,10 +13,10 @@ namespace API.Models
         [Required, MaxLength(100)]
         public string? Email { get; set; }
 
-        [Required, MaxLength(50)]
+        [Required, MaxLength(100)]
         public string? Password { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string? Phone { get; set; }
 
         [MaxLength(255)]
