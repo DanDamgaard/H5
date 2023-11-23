@@ -1,5 +1,6 @@
 ﻿using API.Data;
 using API.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,15 +8,15 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly AppDbContext appDbContext;
-        public AppController(AppDbContext appDbContext)
+        public UserController(AppDbContext appDbContext)
         {
             this.appDbContext = appDbContext;
         }
 
-        // Create a user
+        // Add a new user
         [HttpPost("AddUser")]
         public async Task<ActionResult<User>> AddUser(User user)
         {
