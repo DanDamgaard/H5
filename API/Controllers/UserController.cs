@@ -34,8 +34,8 @@ namespace API.Controllers
         public async Task<ActionResult<List<User>>> GetUsers() => Ok(await appDbContext.User.ToListAsync());
 
         // Get a user by Id
-        [HttpGet("GetUserById/{id}")]
-        public async Task<ActionResult<User>> GetUserById(int id)
+        [HttpGet("GetUser/{id}")]
+        public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await appDbContext.User.FindAsync(id);
             return user != null ? Ok(user) : NotFound("User not found");
