@@ -21,7 +21,7 @@ namespace MobileApp.Services
             string email = username;
             email.Replace("@", "%40");
 
-            var response = await httpClient.GetAsync($"{baseUrl}/api/App/Login/{email}/{password}");
+            var response = await httpClient.GetAsync($"{baseUrl}/api/User/Login/{email}/{password}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -37,7 +37,7 @@ namespace MobileApp.Services
 
         public async Task<bool> CreateUser(User user)
         {
-            var response = await httpClient.PostAsJsonAsync($"{baseUrl}/api/App/AddUser",user);
+            var response = await httpClient.PostAsJsonAsync($"{baseUrl}/api/User/AddUser",user);
 
             if (response.IsSuccessStatusCode)
             {
@@ -53,7 +53,7 @@ namespace MobileApp.Services
         {
             email.Replace("@", "%40");
 
-            var response = await httpClient.GetAsync($"{baseUrl}/api/App/CheckEmail/{email}");
+            var response = await httpClient.GetAsync($"{baseUrl}/api/User/CheckEmail/{email}");
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -64,7 +64,7 @@ namespace MobileApp.Services
 
         public async Task<bool> updateUser(User user)
         {
-            var response = await httpClient.PutAsJsonAsync($"{baseUrl}/api/App/UpdateUser/{user.Id}",user);
+            var response = await httpClient.PutAsJsonAsync($"{baseUrl}/api/User/UpdateUser/{user.Id}",user);
 
             if (response.IsSuccessStatusCode)
             {
