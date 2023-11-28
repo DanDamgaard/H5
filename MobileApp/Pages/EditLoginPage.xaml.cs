@@ -41,7 +41,7 @@ public partial class EditLoginPage : ContentPage
 
     private async void updateUserBtn_Clicked(object sender, EventArgs e)
     {
-        User newUser = new User(currentUser.Id, currentUser.Name, currentUser.Password, currentUser.Email, currentUser.Phone, currentUser.Address, currentUser.Role);
+        User newUser = new User(currentUser.Id, currentUser.Name, currentUser.Password, currentUser.Email, currentUser.Phone, currentUser.Address, currentUser.Roles);
 
         if (emailValidator.IsNotValid)
         {

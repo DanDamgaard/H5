@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.Pages.AdminUserDetails"
+             Title="AdminUserDetails">
+    <VerticalStackLayout Spacing="25" Padding="25">
+        <Label x:Name="nameLabel"></Label>
+        <Label x:Name="emailLabel"></Label>
+        <Label x:Name="addressLabel"></Label>
+        <Label x:Name="phoneLabel"></Label>
+        <Button x:Name="rentHistoryBtn" Text="Se udlejnings historik" Clicked="rentHistoryBtn_Clicked"></Button>
+        
+    </VerticalStackLayout>
+</ContentPage>

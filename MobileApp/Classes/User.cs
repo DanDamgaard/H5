@@ -15,9 +15,9 @@ namespace MobileApp.Classes
         private string _email;
         private string _phone;
         private string _address;
-        private int _role;
+        private int _roles;
 
-        public User(int id, string name, string password, string email, string phone, string address, int role)
+        public User(int id, string name, string password, string email, string phone, string address, int roles)
         {
             _id = id;
             _name = name;
@@ -25,7 +25,7 @@ namespace MobileApp.Classes
             _email = email;
             _phone = phone;
             _address = address;
-            _role = role;
+            _roles = roles;
         }
 
         public int Id { get { return _id; } set { _id = value; } }
@@ -34,7 +34,7 @@ namespace MobileApp.Classes
         public string Email { get { return _email; } set { _email = value; } }
         public string Phone { get { return _phone; } set { _phone = value; } }
         public string Address { get { return _address; } set { _address = value; } }
-        public int Role { get { return _role; } set { _role = value; } }
+        public int Roles { get { return _roles; } set { _roles = value; } }
     }
 
 }

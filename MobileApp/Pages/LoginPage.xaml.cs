@@ -69,7 +69,16 @@ public partial class LoginPage : ContentPage
 
             _authService.login();
 
-            Application.Current.MainPage = new MainPage();
+            User user = Global.User;
+
+            if(Global.User.Roles == 0) { 
+                Application.Current.MainPage = new MainPage();
+
+            }
+            else
+            {
+                Application.Current.MainPage = new AdminMainPage();
+            }
 
         }
         else

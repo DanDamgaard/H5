@@ -49,6 +49,26 @@ namespace MobileApp.Services
             }
         }
 
+        public async Task<User> getUser(int id)
+        {
+            var response = await httpClient.GetAsync($"{baseUrl}/api/User/GetUser/{id}");
+            var result = await response.Content.ReadAsStringAsync();
+            User data = JsonConvert.DeserializeObject<User>(result);
+            return data;
+           
+        }
+
+        public async Task<List<User>> getAllUser()
+        {
+            var response = await httpClient.GetAsync($"{baseUrl}/api/User/GetUsers");
+            var result = await response.Content.ReadAsStringAsync();
+            List<User> data = JsonConvert.DeserializeObject<List<User>>(result);
+            return data;
+
+        }
+
+
+
         public async Task<bool> doesEmailExit(string email)
         {
             email.Replace("@", "%40");
@@ -75,5 +95,21 @@ namespace MobileApp.Services
                 return false;
             }
         }
+
+        public async Task deleteUser(int id)
+        {
+            var response = await httpClient.DeleteAsync($"{baseUrl}/api/User/DeleteUser/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.RequestMessage.ToString());
+            }
+        }
+
+
+
+
+
+
     }
 }
