@@ -25,7 +25,14 @@ public partial class LoadingPage : ContentPage
 
             if (await _api.Login(user, pass))
             {
-                Application.Current.MainPage = new MainPage();
+                if(Global.User.Roles == 0)
+                {
+                    Application.Current.MainPage = new MainPage();
+                }
+                else
+                {
+                    Application.Current.MainPage = new AdminMainPage();
+                }
             }
             else
             {
