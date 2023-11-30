@@ -25,9 +25,16 @@ namespace MobileApp
 
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(Entry), (handler, view) =>
             {
-            #if ANDROID
+                #if ANDROID
                         handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
-            #endif
+                #endif
+            });
+
+            Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping(nameof(SearchBar), (handler, view) =>
+            {
+                #if ANDROID
+                        handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                #endif
             });
 
 #if DEBUG
