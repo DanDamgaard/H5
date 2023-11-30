@@ -19,5 +19,9 @@ namespace API.Models
 
         [DataType(DataType.DateTime)]
         public DateTime EndDate { get; set; }
+
+        // Navigation properties
+        public User? User { get; set; }
+        public Book? Book { get; set; }
     }
 }

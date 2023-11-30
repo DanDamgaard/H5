@@ -50,5 +50,30 @@ namespace API.Controllers
             return BadRequest("Invalid Request");
         }
 
+        [HttpGet("GetUsersWithRentedBooks")]
+        public IActionResult GetUsersWithRentedBooks()
+        {
+            try
+            {
+                var result = appDbContext.UserBook
+                    .Include(ub => ub.User)
+                    .Include(ub => ub.Book)
+                    .Select(ub => new
+                    {
+                        UserName = ub.User.Name,
+                        BookId = ub.Book.Id,
+                        BookTitle = ub.Book.Title,
+                    })
+                    .ToList();
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions appropriately, log if needed
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
+
     }
 }

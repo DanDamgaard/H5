@@ -27,5 +27,8 @@ namespace API.Models
         public string Publisher { get; set; }
 
         public int Status { get; set; }
+
+        // Navigation properties
+        public Author? Author { get; set; }
     }
 }
