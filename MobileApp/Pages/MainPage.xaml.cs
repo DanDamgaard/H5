@@ -36,4 +36,9 @@ public partial class MainPage : ContentPage
     {
         await Navigation.PushModalAsync(new AccountPage());
     }
+
+    private async void BookListBtn_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushModalAsync(new BookListPage());
+    }
 }

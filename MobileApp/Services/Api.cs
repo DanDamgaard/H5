@@ -107,7 +107,13 @@ namespace MobileApp.Services
         }
 
 
-
+        public async Task<List<Book>> GetBooks()
+        {
+            var response = await httpClient.GetAsync($"{baseUrl}/api/Book/GetBooks");
+            var result = await response.Content.ReadAsStringAsync();
+            List<Book> data = JsonConvert.DeserializeObject<List<Book>>(result);
+            return data;
+        }
 
 
 

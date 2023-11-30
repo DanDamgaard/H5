@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.Pages.BookListPage"
+             Title="BookListPage">
+    <ScrollView>
+        <VerticalStackLayout>
+            <VerticalStackLayout x:Name="FilterStack" Padding="25" IsVisible="false">
+                <Frame>
+                    <VerticalStackLayout HorizontalOptions="Center" >
+                        <Label Text="Genre:" TextDecorations="Underline" HorizontalOptions="Center"></Label>
+                        <HorizontalStackLayout>
+                            <VerticalStackLayout x:Name="genreStack1">
+                            </VerticalStackLayout>
+                            <VerticalStackLayout x:Name="genreStack2">
+                            </VerticalStackLayout>
+
+                            
+                        </HorizontalStackLayout>
+
+                        <Button x:Name="CloseFilter" Text="Se filtrede bøger" Clicked="CloseFilter_Clicked"></Button>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="ListStack">
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Frame HeightRequest="45" Padding="0">
+                        <SearchBar x:Name="searchBar" TextChanged="SearchBar_TextChanged" SearchButtonPressed="searchBar_SearchButtonPressed"></SearchBar>
+                    </Frame>
+                    <ImageButton x:Name="FilterBtn" HeightRequest="25" WidthRequest="25" Source="filter.png" Clicked="FilterBtn_Clicked"></ImageButton>
+                </HorizontalStackLayout>
+
+                <VerticalStackLayout x:Name="BookStack" Spacing="30" Padding="25"/>
+            </VerticalStackLayout>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
