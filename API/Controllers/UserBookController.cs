@@ -50,5 +50,20 @@ namespace API.Controllers
             return BadRequest("Invalid Request");
         }
 
+        [HttpGet("GetUsersWithRentedBooks")]
+        public async Task<ActionResult<List<UserBook>>> GetUsersWithRentedBooks()
+        {        
+                var UserBooks = await appDbContext.UserBook
+                    .Include(ub => ub.User)
+                    .Include(ub => ub.Book)
+                    .Select(ub => new
+                    {
+                        UserName = ub.User.Name,
+                        BookId = ub.Book.Id,
+                        BookTitle = ub.Book.Title,
+                    }).ToListAsync();
+
+                return Ok(UserBooks);          
+        }
     }
 }

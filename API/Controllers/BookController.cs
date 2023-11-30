@@ -1,6 +1,5 @@
 ﻿using API.Data;
 using API.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,14 +30,51 @@ namespace API.Controllers
 
         // Get all books
         [HttpGet("GetBooks")]
-        public async Task<ActionResult<List<Book>>> GetBooks() => Ok(await appDbContext.Book.ToListAsync());
+        public async Task<ActionResult<List<Book>>> GetBooks()
+        {
+            var books = await appDbContext.Book
+                .Include(b => b.Author)
+                .Select(b => new
+                {
+                    Id=b.Id,
+                    Title= b.Title,
+                    Category = b.Category,
+                    Description = b.Description,
+                    Image = b.Image,
+                    AuthorName = b.Author.Name,
+                    Publisher = b.Publisher,
+                    Status = b.Status
+                }).ToListAsync();
+         
+            return Ok(books);
+        }
 
         // Get a book by Id
         [HttpGet("GetBook/{id}")]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
-            var book = await appDbContext.Book.FindAsync(id);
-            return book != null ? Ok(book) : NotFound("Book not found");
+            var book = await appDbContext.Book
+                .Include(b => b.Author)  // Include the Author data
+                .FirstOrDefaultAsync(b => b.Id == id);
+
+            if (book == null)
+            {
+                return NotFound("Book not found");
+            }
+
+            var bookWithAuthorName = new
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Category = book.Category,
+                Description = book.Description,
+                Image = book.Image,
+                AuthorName = book.Author?.Name,  // Include Author's name
+                Publisher = book.Publisher,
+                Status = book.Status
+            };
+
+            return Ok(bookWithAuthorName);
         }
 
         // Update book data
