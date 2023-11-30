@@ -51,11 +51,9 @@ namespace API.Controllers
         }
 
         [HttpGet("GetUsersWithRentedBooks")]
-        public IActionResult GetUsersWithRentedBooks()
-        {
-            try
-            {
-                var result = appDbContext.UserBook
+        public async Task<ActionResult<List<UserBook>>> GetUsersWithRentedBooks()
+        {        
+                var UserBooks = await appDbContext.UserBook
                     .Include(ub => ub.User)
                     .Include(ub => ub.Book)
                     .Select(ub => new
@@ -63,17 +61,9 @@ namespace API.Controllers
                         UserName = ub.User.Name,
                         BookId = ub.Book.Id,
                         BookTitle = ub.Book.Title,
-                    })
-                    .ToList();
+                    }).ToListAsync();
 
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions appropriately, log if needed
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
-            }
+                return Ok(UserBooks);          
         }
-
     }
 }
