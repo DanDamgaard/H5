@@ -27,7 +27,6 @@ public partial class BookListPage : ContentPage
             stack.Spacing = 10;
 
             Image img = new Image();
-            Uri uri = new Uri("/Assets/default.png", UriKind.Relative);
             img.Source = book.Image;
             stack.Children.Add(img);
 
@@ -41,6 +40,17 @@ public partial class BookListPage : ContentPage
             {
                 Navigation.PushModalAsync(new BookDetailPage(book));
             };
+
+            if(Global.User.Roles == 1)
+            {
+                Button btn = new Button();
+                btn.Text = "Se historik";
+                btn.Clicked += (s, arg) =>
+                {
+                    Navigation.PushAsync(new BookHistoryPage(book));
+                };
+            }
+
             stack.Children.Add(button);
 
             BookStack.Children.Add(stack);
@@ -85,7 +95,15 @@ public partial class BookListPage : ContentPage
             btn.Background = Colors.Transparent;
 
 
+
+
             CheckBox box = new CheckBox();
+
+
+            btn.Clicked += (s, arg) =>
+            {
+                box.IsChecked = !box.IsChecked;
+            };
 
             stack.Children.Add(btn);
             stack.Children.Add(box);
