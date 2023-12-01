@@ -4,9 +4,27 @@
              x:Class="MobileApp.Pages.BookDetailPage"
              Title="BookDetailPage">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
+        <VerticalStackLayout Padding="25" Spacing="25" WidthRequest="300">
+            <Label 
+            x:Name="bookTitleLabel"
+            FontAttributes="Bold"
+            FontSize="16"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+            <Image x:Name="BookImage"></Image>
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="Status: "/>
+                <Label x:Name="statusLabel"/>
+                
+            </HorizontalStackLayout>
+            <Button x:Name="RentBookBtn" IsVisible="false" Clicked="RentBookBtn_Clicked"></Button>
+            <Button x:Name="BookHistoryBtn" IsVisible="false" Clicked="BookHistoryBtn_Clicked"></Button>
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Beskrivelse" HorizontalOptions="Center" TextDecorations="Underline"></Label>
+                <Label x:Name="descBookLabel" />
+            </VerticalStackLayout>
+            
+        </VerticalStackLayout>
+        
     </VerticalStackLayout>
 </ContentPage>
