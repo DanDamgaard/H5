@@ -70,7 +70,6 @@ namespace API.Controllers
             }
         }
 
-
         // Re-rent a book
         [HttpPost("ReRentBook")]
         public async Task<ActionResult<UserBook>> ReRentBook(UserBook userBook)
@@ -128,7 +127,7 @@ namespace API.Controllers
                         return BadRequest("User has not rented this book");
                     }
 
-                    // Remove the book rental entry from the UserBook table
+                    // Remove the rented book from the UserBook table
                     appDbContext.UserBook.Remove(existingRental);
                     await appDbContext.SaveChangesAsync();
 
@@ -138,7 +137,6 @@ namespace API.Controllers
             }
             return BadRequest("Invalid Request");
         }
-
 
         [HttpGet("GetUsersWithRentedBooks")]
         public async Task<ActionResult<List<UserBook>>> GetUsersWithRentedBooks()
