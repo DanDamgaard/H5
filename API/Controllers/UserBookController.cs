@@ -50,6 +50,27 @@ namespace API.Controllers
             return BadRequest("Invalid Request");
         }
 
+        // Get all rented books
+        [HttpGet("GetRentedBooks")]
+        public async Task<ActionResult<IEnumerable<UserBook>>> GetRentedBooks()
+        {
+            try
+            {
+                var rentedBooks = await appDbContext.UserBook
+                    .Include(ub => ub.Book) // Include book details
+                    .Include(ub => ub.User) // Include user details
+                    .ToListAsync();
+
+                return Ok(rentedBooks);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it appropriately
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+
         // Re-rent a book
         [HttpPost("ReRentBook")]
         public async Task<ActionResult<UserBook>> ReRentBook(UserBook userBook)
