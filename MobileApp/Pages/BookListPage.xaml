@@ -9,15 +9,20 @@
                 <Frame>
                     <VerticalStackLayout HorizontalOptions="Center" >
                         <Label Text="Genre:" TextDecorations="Underline" HorizontalOptions="Center"></Label>
-                        <HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="0,0,0,20">
                             <VerticalStackLayout x:Name="genreStack1">
                             </VerticalStackLayout>
                             <VerticalStackLayout x:Name="genreStack2">
                             </VerticalStackLayout>
-
-                            
                         </HorizontalStackLayout>
-
+                        <Label Text="Forfatter:" TextDecorations="Underline" HorizontalOptions="Center"></Label>
+                        <HorizontalStackLayout Margin="0,0,0,20">
+                            <VerticalStackLayout x:Name="autherStack1">
+                            </VerticalStackLayout>
+                            <VerticalStackLayout x:Name="autherStack2">
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <Button x:Name="ClearFilterBtn" Text="Rens filter" Margin="0,10" Clicked="ClearFilterBtn_Clicked"></Button>
                         <Button x:Name="CloseFilter" Text="Se filtrede bøger" Clicked="CloseFilter_Clicked"></Button>
                     </VerticalStackLayout>
                 </Frame>
