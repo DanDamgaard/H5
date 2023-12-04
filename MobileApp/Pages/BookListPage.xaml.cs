@@ -47,8 +47,9 @@ public partial class BookListPage : ContentPage
                 btn.Text = "Se historik";
                 btn.Clicked += (s, arg) =>
                 {
-                    Navigation.PushAsync(new BookHistoryPage(book));
+                    Navigation.PushModalAsync(new BookHistoryPage(book));
                 };
+                stack.Children.Add(btn);
             }
 
             stack.Children.Add(button);
@@ -71,6 +72,7 @@ public partial class BookListPage : ContentPage
         genreStack2.Clear();
 
         List<string> genre = new List<string>();
+        List<string> auther = new List<string>();
 
         foreach (Book book in bookList)
         {
@@ -78,7 +80,14 @@ public partial class BookListPage : ContentPage
             {
                 genre.Add(book.Category);
             }
+
+            if (!auther.Contains(book.AuthorName))
+            {
+                auther.Add(book.AuthorName);
+            }
         }
+
+
 
         bool changeStack = true;
 
@@ -93,9 +102,6 @@ public partial class BookListPage : ContentPage
             btn.TextColor = Colors.Black;
             btn.HeightRequest = 20;
             btn.Background = Colors.Transparent;
-
-
-
 
             CheckBox box = new CheckBox();
 
@@ -117,6 +123,43 @@ public partial class BookListPage : ContentPage
             else
             {
                 genreStack2.Children.Add(stack);
+                changeStack = true;
+            }
+        }
+
+        changeStack = true;
+
+        foreach (string s in auther)
+        {
+            HorizontalStackLayout stack = new HorizontalStackLayout();
+
+
+            Button btn = new Button();
+            btn.Text = s;
+            btn.Padding = 0;
+            btn.TextColor = Colors.Black;
+            btn.HeightRequest = 20;
+            btn.Background = Colors.Transparent;
+
+            CheckBox box = new CheckBox();
+
+            btn.Clicked += (s, arg) =>
+            {
+                box.IsChecked = !box.IsChecked;
+            };
+
+            stack.Children.Add(btn);
+            stack.Children.Add(box);
+
+
+            if (changeStack)
+            {
+                autherStack1.Children.Add(stack);
+                changeStack = false;
+            }
+            else
+            {
+                autherStack2.Children.Add(stack);
                 changeStack = true;
             }
         }
@@ -147,6 +190,24 @@ public partial class BookListPage : ContentPage
             }
         }
 
+        foreach (HorizontalStackLayout h in autherStack1)
+        {
+            CheckBox box = (CheckBox)h.Children[1];
+            if (box.IsChecked == true)
+            {
+                return true;
+            }
+        }
+
+        foreach (HorizontalStackLayout h in autherStack2)
+        {
+            CheckBox box = (CheckBox)h.Children[1];
+            if (box.IsChecked == true)
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -163,6 +224,7 @@ public partial class BookListPage : ContentPage
         List<Book> newBookList = new List<Book>();
         List<Book> searchBookList = new List<Book>();
         List<string> genreFilterList = new List<string>();
+        List<string> autherFilterList = new List<string>();
 
 
         if(!String.IsNullOrEmpty(searchBar.Text))
@@ -202,6 +264,30 @@ public partial class BookListPage : ContentPage
                 }
             }
 
+            foreach (HorizontalStackLayout h in autherStack1)
+            {
+                Button btn = (Button)h.Children[0];
+                CheckBox box = (CheckBox)h.Children[1];
+                string genre = btn.Text;
+
+                if (box.IsChecked == true)
+                {
+                    autherFilterList.Add(genre);
+                }
+            }
+
+            foreach (HorizontalStackLayout h in autherStack2)
+            {
+                Button btn = (Button)h.Children[0];
+                CheckBox box = (CheckBox)h.Children[1];
+                string genre = btn.Text;
+
+                if (box.IsChecked == true)
+                {
+                    autherFilterList.Add(genre);
+                }
+            }
+
             if (searchBookList.Count > 0)
             {
                 data = searchBookList;
@@ -209,17 +295,33 @@ public partial class BookListPage : ContentPage
 
             foreach (Book book in data)
             {
-                foreach (string genre in genreFilterList)
+                if(genreFilterList.Count > 0 && autherFilterList.Count > 0)
                 {
-                    if (book.Category == genre)
+                    if (genreFilterList.Contains(book.Category) && autherFilterList.Contains(book.AuthorName))
                     {
                         newBookList.Add(book);
                     }
                 }
+                else if(genreFilterList.Count > 0 && autherFilterList.Count == 0)
+                {
+                    if (genreFilterList.Contains(book.Category))
+                    {
+                        newBookList.Add(book);
+                    }
+                }
+                else
+                {
+                    if (autherFilterList.Contains(book.AuthorName))
+                    {
+                        newBookList.Add(book);
+                    }
+                }
+                
             }
+
+
         }
         
-
         if (isFilterUsed())
         {
             createBookList(newBookList);
@@ -247,5 +349,32 @@ public partial class BookListPage : ContentPage
     private void searchBar_SearchButtonPressed(object sender, EventArgs e)
     {
         searchBar.Unfocus();
+    }
+
+    private void ClearFilterBtn_Clicked(object sender, EventArgs e)
+    {
+        foreach (HorizontalStackLayout h in genreStack1)
+        {
+            CheckBox box = (CheckBox)h.Children[1];
+            box.IsChecked = false;
+        }
+
+        foreach (HorizontalStackLayout h in genreStack2)
+        {
+            CheckBox box = (CheckBox)h.Children[1];
+            box.IsChecked = false;
+        }
+
+        foreach (HorizontalStackLayout h in autherStack1)
+        {
+            CheckBox box = (CheckBox)h.Children[1];
+            box.IsChecked = false;
+        }
+
+        foreach (HorizontalStackLayout h in autherStack2)
+        {
+            CheckBox box = (CheckBox)h.Children[1];
+            box.IsChecked = false;
+        }
     }
 }

@@ -23,4 +23,9 @@ public partial class AdminMainPage : ContentPage
     {
         await Navigation.PushModalAsync(new AllUsersPage());
     }
+
+    private async void BookListBtn_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushModalAsync(new BookListPage());
+    }
 }

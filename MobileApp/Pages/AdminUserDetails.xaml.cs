@@ -16,8 +16,8 @@ public partial class AdminUserDetails : ContentPage
         addressLabel.Text = "Adresse: " + _user.Address;
     }
 
-    private void rentHistoryBtn_Clicked(object sender, EventArgs e)
+    private async void rentHistoryBtn_Clicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushModalAsync(new AdminUserRentHistoryPage());
     }
 }
