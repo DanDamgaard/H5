@@ -50,6 +50,94 @@ namespace API.Controllers
             return BadRequest("Invalid Request");
         }
 
+        // Get all rented books
+        [HttpGet("GetRentedBooks")]
+        public async Task<ActionResult<IEnumerable<UserBook>>> GetRentedBooks()
+        {
+            try
+            {
+                var rentedBooks = await appDbContext.UserBook
+                    .Include(ub => ub.Book) // Include book details
+                    .Include(ub => ub.User) // Include user details
+                    .ToListAsync();
+
+                return Ok(rentedBooks);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it appropriately
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        // Re-rent a book
+        [HttpPost("ReRentBook")]
+        public async Task<ActionResult<UserBook>> ReRentBook(UserBook userBook)
+        {
+            if (userBook != null)
+            {
+                // Ensure that the book and user exist
+                var bookExists = await appDbContext.Book.AnyAsync(b => b.Id == userBook.BookId);
+                var userExists = await appDbContext.User.AnyAsync(u => u.Id == userBook.UserId);
+
+                if (bookExists && userExists)
+                {
+                    // Check if the user has rented the book
+                    var existingRental = await appDbContext.UserBook
+                        .FirstOrDefaultAsync(ub => ub.BookId == userBook.BookId && ub.UserId == userBook.UserId);
+
+                    if (existingRental == null)
+                    {
+                        return BadRequest("User has not rented this book");
+                    }
+
+                    // Update StartDate and EndDate
+                    existingRental.StartDate = userBook.StartDate;
+                    existingRental.EndDate = userBook.StartDate.AddDays(14);
+
+                    // Save changes to the database
+                    appDbContext.UserBook.Update(existingRental);
+                    await appDbContext.SaveChangesAsync();
+
+                    return Ok(existingRental);
+                } 
+                return BadRequest("Invalid Book or User");
+            }
+            return BadRequest("Invalid Request");
+        }
+
+        // Return a rented book
+        [HttpPost("ReturnBook")]
+        public async Task<ActionResult<UserBook>> ReturnBook(UserBook userBook)
+        {
+            if (userBook != null)
+            {
+                // Ensure that the book and user exist
+                var bookExists = await appDbContext.Book.AnyAsync(b => b.Id == userBook.BookId);
+                var userExists = await appDbContext.User.AnyAsync(u => u.Id == userBook.UserId);
+
+                if (bookExists && userExists)
+                {
+                    // Check if the user has rented the book
+                    var existingRental = await appDbContext.UserBook
+                        .FirstOrDefaultAsync(ub => ub.BookId == userBook.BookId && ub.UserId == userBook.UserId);
+
+                    if (existingRental == null)
+                    {
+                        return BadRequest("User has not rented this book");
+                    }
+
+                    // Remove the rented book from the UserBook table
+                    appDbContext.UserBook.Remove(existingRental);
+                    await appDbContext.SaveChangesAsync();
+
+                    return Ok(existingRental);
+                }
+                return BadRequest("Invalid Book or User");
+            }
+            return BadRequest("Invalid Request");
+        }
+
         [HttpGet("GetUsersWithRentedBooks")]
         public async Task<ActionResult<List<UserBook>>> GetUsersWithRentedBooks()
         {        
