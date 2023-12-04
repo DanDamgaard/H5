@@ -50,6 +50,39 @@ namespace API.Controllers
             return BadRequest("Invalid Request");
         }
 
+        // Return a rented book
+        [HttpPost("ReturnBook")]
+        public async Task<ActionResult<UserBook>> ReturnBook(UserBook userBook)
+        {
+            if (userBook != null)
+            {
+                // Ensure that the book and user exist
+                var bookExists = await appDbContext.Book.AnyAsync(b => b.Id == userBook.BookId);
+                var userExists = await appDbContext.User.AnyAsync(u => u.Id == userBook.UserId);
+
+                if (bookExists && userExists)
+                {
+                    // Check if the user has rented the book
+                    var existingRental = await appDbContext.UserBook
+                        .FirstOrDefaultAsync(ub => ub.BookId == userBook.BookId && ub.UserId == userBook.UserId);
+
+                    if (existingRental == null)
+                    {
+                        return BadRequest("User has not rented this book");
+                    }
+
+                    // Remove the book rental entry from the UserBook table
+                    appDbContext.UserBook.Remove(existingRental);
+                    await appDbContext.SaveChangesAsync();
+
+                    return Ok(existingRental);
+                }
+                return BadRequest("Invalid Book or User");
+            }
+            return BadRequest("Invalid Request");
+        }
+
+
         [HttpGet("GetUsersWithRentedBooks")]
         public async Task<ActionResult<List<UserBook>>> GetUsersWithRentedBooks()
         {        
