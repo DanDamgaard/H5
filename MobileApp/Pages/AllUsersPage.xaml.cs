@@ -22,6 +22,7 @@ public partial class AllUsersPage : ContentPage
 			if(user.Roles == 0)
 			{
                 VerticalStackLayout stack = new VerticalStackLayout();
+				stack.Spacing = 10;
                 stack.HorizontalOptions = LayoutOptions.Center;
 
                 Label label = new Label();
@@ -39,6 +40,8 @@ public partial class AllUsersPage : ContentPage
 					Navigation.PushModalAsync(new AdminUserDetails(user));
 				};
 				
+                
+
 
                 stack.Children.Add(label);
 				stack.Children.Add(button);

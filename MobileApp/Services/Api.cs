@@ -115,7 +115,21 @@ namespace MobileApp.Services
             return data;
         }
 
+        public async Task<Book> getBook(int id)
+        {
+            var response = await httpClient.GetAsync($"{baseUrl}/api/Book/GetBook/{id}");
+            var result = await response.Content.ReadAsStringAsync();
+            Book data = JsonConvert.DeserializeObject<Book>(result);
+            return data;
+        }
 
+        public async Task<List<RentedBook>> getRentedBooks()
+        {
+            var response = await httpClient.GetAsync($"{baseUrl}/api/UserBook/GetRentedBooks");
+            var result = await response.Content.ReadAsStringAsync();
+            List<RentedBook> data = JsonConvert.DeserializeObject<List<RentedBook>>(result);
+            return data;
+        }
 
     }
 }
