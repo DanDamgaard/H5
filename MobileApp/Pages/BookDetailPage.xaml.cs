@@ -1,18 +1,27 @@
 using MobileApp.Classes;
+using MobileApp.Services;
 
 namespace MobileApp.Pages;
 
 public partial class BookDetailPage : ContentPage
 {
     private readonly Book _book;
+    private Api api = new Api();
 
     public BookDetailPage(Book book)
 	{
 		InitializeComponent();
         _book = book;
-        bookTitleLabel.Text = _book.Title;
+        getBook();
+    }
+
+    private async void getBook()
+    {
+        Book book = await api.getBook(_book.Id);
+        bookTitleLabel.Text = book.Title;
         BookImage.Source = book.Image;
-        if(book.Status == 1)
+        AutherLabel.Text = "Forfatter: " + book.AuthorName;
+        if (book.Status == 1)
         {
             statusLabel.Text = "Udlånt";
             statusLabel.TextColor = Colors.Red;
@@ -23,8 +32,7 @@ public partial class BookDetailPage : ContentPage
             statusLabel.TextColor = Colors.Green;
             RentBookBtn.IsVisible = true;
         }
-        descBookLabel.Text = _book.Description;
-
+        descBookLabel.Text = book.Description;
     }
 
     private void RentBookBtn_Clicked(object sender, EventArgs e)

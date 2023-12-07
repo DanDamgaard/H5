@@ -18,6 +18,6 @@ public partial class AdminUserDetails : ContentPage
 
     private async void rentHistoryBtn_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new AdminUserRentHistoryPage());
+        await Navigation.PushModalAsync(new UserRentHistoryPage(_user));
     }
 }
