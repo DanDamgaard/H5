@@ -31,7 +31,7 @@ namespace API.Controllers
                 {
                     // Check if the user has already rented the same book
                     var existingRental = await appDbContext.UserBook
-                        .FirstOrDefaultAsync(ub => ub.BookId == userBook.BookId && ub.UserId == userBook.UserId);
+                        .FirstOrDefaultAsync(ub => ub.BookId == userBook.BookId && ub.UserId == userBook.UserId && ub.IsRented);
 
                     if (existingRental != null)
                     {
@@ -40,6 +40,9 @@ namespace API.Controllers
 
                     // Set the EndDate to StartDate + 14 days
                     userBook.EndDate = userBook.StartDate.AddDays(14);
+
+                    // Set IsRented to true
+                    userBook.IsRented = true;
 
                     var result = appDbContext.UserBook.Add(userBook).Entity;
                     await appDbContext.SaveChangesAsync();
@@ -57,9 +60,19 @@ namespace API.Controllers
             try
             {
                 var rentedBooks = await appDbContext.UserBook
-                    .Include(ub => ub.Book) // Include book details
-                    .Include(ub => ub.User) // Include user details
-                    .ToListAsync();
+                    .Include(ub => ub.Book) 
+                    .Include(ub => ub.User)
+                    .Select(ub => new
+                    {
+                        Id= ub.Id,
+                        BookId = ub.BookId,
+                        UserId = ub.UserId,
+                        BookTitle = ub.Book.Title,
+                        UserName = ub.User.Name,
+                        StartDate = ub.StartDate,
+                        EndDate = ub.EndDate,
+                        IsRented = ub.IsRented
+                    }).ToListAsync();
 
                 return Ok(rentedBooks);
             }
@@ -95,12 +108,15 @@ namespace API.Controllers
                     existingRental.StartDate = userBook.StartDate;
                     existingRental.EndDate = userBook.StartDate.AddDays(14);
 
+                    // Set IsRented to true
+                    existingRental.IsRented = true;
+
                     // Save changes to the database
                     appDbContext.UserBook.Update(existingRental);
                     await appDbContext.SaveChangesAsync();
 
                     return Ok(existingRental);
-                } 
+                }
                 return BadRequest("Invalid Book or User");
             }
             return BadRequest("Invalid Request");
@@ -127,8 +143,15 @@ namespace API.Controllers
                         return BadRequest("User has not rented this book");
                     }
 
-                    // Remove the rented book from the UserBook table
-                    appDbContext.UserBook.Remove(existingRental);
+                    // Set IsRented to false
+                    existingRental.IsRented = false;
+
+                    // Update the EndDate
+                    existingRental.EndDate = DateTime.UtcNow; 
+
+                    appDbContext.Entry(existingRental).State = EntityState.Modified;
+
+                    // Save the changes to the database
                     await appDbContext.SaveChangesAsync();
 
                     return Ok(existingRental);
