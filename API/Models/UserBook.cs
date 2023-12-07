@@ -20,6 +20,9 @@ namespace API.Models
         [DataType(DataType.DateTime)]
         public DateTime EndDate { get; set; }
 
+        [Display(Name = "IsRented")]
+        public bool IsRented { get; set; }
+
         // Navigation properties
         public User? User { get; set; }
         public Book? Book { get; set; }
