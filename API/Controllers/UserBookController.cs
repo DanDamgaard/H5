@@ -67,6 +67,7 @@ namespace API.Controllers
             try
             {
                 var rentedBooks = await appDbContext.UserBook
+                    .Where(ub => ub.IsRented)
                     .Include(ub => ub.Book) 
                     .Include(ub => ub.User)
                     .Select(ub => new
@@ -77,17 +78,44 @@ namespace API.Controllers
                         BookTitle = ub.Book.Title,
                         UserName = ub.User.Name,
                         StartDate = ub.StartDate,
-                        EndDate = ub.EndDate,
-                        IsRented = ub.IsRented
+                        EndDate = ub.EndDate
                     }).ToListAsync();
 
                 return Ok(rentedBooks);
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it appropriately
                 return StatusCode(500, "Internal Server Error");
             }
+        }
+
+        // Get the entire history of rented books
+        [HttpGet("GetUsersAndBooks")]
+        public async Task<ActionResult<List<UserBook>>> GetUsersAndBooks()
+        {
+            try
+            {
+                var UserBooks = await appDbContext.UserBook
+                .Include(ub => ub.User)
+                .Include(ub => ub.Book)
+                .Select(ub => new
+                {
+                    Id = ub.Id,
+                    BookId = ub.BookId,
+                    UserId = ub.UserId,
+                    BookTitle = ub.Book.Title,
+                    UserName = ub.User.Name,
+                    StartDate = ub.StartDate,
+                    EndDate = ub.EndDate,
+                    IsRented = ub.IsRented
+                }).ToListAsync();
+
+                return Ok(UserBooks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }        
         }
 
         // Re-rent a book
@@ -170,22 +198,6 @@ namespace API.Controllers
                 return BadRequest("Invalid Book or User");
             }
             return BadRequest("Invalid Request");
-        }
-
-        [HttpGet("GetUsersWithRentedBooks")]
-        public async Task<ActionResult<List<UserBook>>> GetUsersWithRentedBooks()
-        {        
-                var UserBooks = await appDbContext.UserBook
-                    .Include(ub => ub.User)
-                    .Include(ub => ub.Book)
-                    .Select(ub => new
-                    {
-                        UserName = ub.User.Name,
-                        BookId = ub.Book.Id,
-                        BookTitle = ub.Book.Title,
-                    }).ToListAsync();
-
-                return Ok(UserBooks);          
-        }
+        }       
     }
 }
