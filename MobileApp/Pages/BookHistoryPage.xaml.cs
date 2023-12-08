@@ -30,7 +30,7 @@ public partial class BookHistoryPage : ContentPage
         List<RentedBook> rentedBooks = await api.getRentedBooks();
         foreach(RentedBook book in rentedBooks)
         {
-            if(book.Bookid == _book.Id)
+            if(book.BookId == _book.Id)
             {
                 bookList.Add(book);
 
@@ -101,14 +101,14 @@ public partial class BookHistoryPage : ContentPage
             {
                 userSort = false;
                 hb1Btn.Text = "Bruger ↑";
-                bookList = bookList.OrderBy(X => X.User.Name).ToList();
+                bookList = bookList.OrderBy(X => X.UserName).ToList();
                 createTable(bookList);
             }
             else
             {
                 userSort = true;
                 hb1Btn.Text = "Bruger ↓";
-                bookList = bookList.OrderByDescending(X => X.User.Name).ToList();
+                bookList = bookList.OrderByDescending(X => X.UserName).ToList();
                 createTable(bookList);
             }
             startSort = false;
@@ -185,7 +185,7 @@ public partial class BookHistoryPage : ContentPage
 
             Label userLabel = new Label();
             userLabel.HorizontalOptions = LayoutOptions.Center;
-            userLabel.Text = book.User.Name;
+            userLabel.Text = book.UserName;
             userLabel.TextColor = Colors.Black;
             userBorder.Content = userLabel;
 
