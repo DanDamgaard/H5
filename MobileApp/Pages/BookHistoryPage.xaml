@@ -8,7 +8,10 @@
             <Image x:Name="bookImage"/>
             <Label x:Name="titelLabel" Text="Titel" HorizontalOptions="Center" TextDecorations="Underline"/>
             <Label x:Name="BookTitelLabel" HorizontalOptions="Center"/>
-            <VerticalStackLayout x:Name="tableStack"/>
+            <VerticalStackLayout >
+                <HorizontalStackLayout x:Name="headerStack" Spacing="0" Padding="0"></HorizontalStackLayout>
+                <VerticalStackLayout x:Name="tableStack"/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
         
     </ScrollView>

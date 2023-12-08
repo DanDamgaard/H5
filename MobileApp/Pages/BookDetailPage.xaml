@@ -17,7 +17,7 @@
                 <Label x:Name="statusLabel"/>
             </HorizontalStackLayout>
             <Label x:Name="AutherLabel" HorizontalOptions="Center"/>
-            <Button x:Name="RentBookBtn" IsVisible="false" Clicked="RentBookBtn_Clicked"></Button>
+            <Button x:Name="RentBookBtn" Text="Udlej bog" IsVisible="false" Clicked="RentBookBtn_Clicked"></Button>
             <Button x:Name="BookHistoryBtn" IsVisible="false" Clicked="BookHistoryBtn_Clicked"></Button>
             <VerticalStackLayout Spacing="10">
                 <Label Text="Beskrivelse" HorizontalOptions="Center" TextDecorations="Underline"></Label>

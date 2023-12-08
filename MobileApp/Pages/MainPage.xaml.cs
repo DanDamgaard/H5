@@ -41,4 +41,9 @@ public partial class MainPage : ContentPage
     {
         await Navigation.PushModalAsync(new BookListPage());
     }
+
+    private async void RentedBooksBtn_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushModalAsync(new UserRentedBooksPage(Global.User));
+    }
 }

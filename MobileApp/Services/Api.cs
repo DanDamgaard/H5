@@ -130,6 +130,48 @@ namespace MobileApp.Services
             List<RentedBook> data = JsonConvert.DeserializeObject<List<RentedBook>>(result);
             return data;
         }
+        public async Task<bool> returnBook(RentedBook book)
+        {
+            var response = await httpClient.PutAsJsonAsync($"{baseUrl}/api/UserBook/ReturnBook", book);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> rentBook(RentedBook book)
+        {
+            var response = await httpClient.PutAsJsonAsync($"{baseUrl}/api/UserBook/ReRentBook", book);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> reRentBook(RentedBook book)
+        {
+            var response = await httpClient.PutAsJsonAsync($"{baseUrl}/api/UserBook/ReRentBook", book);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
     }
 }
