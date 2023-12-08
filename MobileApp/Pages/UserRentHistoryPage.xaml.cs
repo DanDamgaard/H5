@@ -45,10 +45,11 @@ public partial class UserRentHistoryPage : ContentPage
         
     }
 
-    private void createBookList()
+    private async void createBookList()
     {
         foreach(RentedBook book in rentedBooks)
         {
+            Book selectedBook = await api.getBook(book.BookId);
             HorizontalStackLayout hs = new HorizontalStackLayout();
             hs.Spacing = 5;
 
@@ -59,12 +60,12 @@ public partial class UserRentHistoryPage : ContentPage
             vs2.Spacing = 5;
 
             Image image = new Image();
-            image.Source = book.Book.Image;
+            image.Source = selectedBook.Image;
             vs1.Children.Add(image);
             hs.Children.Add(vs1);
 
             Label titel = new Label();
-            titel.Text = book.Book.Title;
+            titel.Text = selectedBook.Title;
             titel.LineBreakMode = LineBreakMode.WordWrap;
             titel.MaxLines = 3;
             titel.WidthRequest = 200;
@@ -83,7 +84,7 @@ public partial class UserRentHistoryPage : ContentPage
             button.Text = "Se bog";
             button.Clicked += (s, arg) =>
             {
-                Navigation.PushModalAsync(new BookDetailPage(book.Book));
+                Navigation.PushModalAsync(new BookDetailPage(selectedBook));
             };
             vs2.Children.Add(button);
 

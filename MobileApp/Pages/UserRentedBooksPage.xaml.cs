@@ -48,6 +48,7 @@ public partial class UserRentedBooksPage : ContentPage
     {
         foreach (RentedBook book in rentedBooks)
         {
+            Book selectedBook = await api.getBook(book.BookId);
             HorizontalStackLayout hs = new HorizontalStackLayout();
             hs.Spacing = 5;
 
@@ -58,12 +59,12 @@ public partial class UserRentedBooksPage : ContentPage
             vs2.Spacing = 5;
 
             Image image = new Image();
-            image.Source = book.Book.Image;
+            image.Source = selectedBook.Image;
             vs1.Children.Add(image);
             hs.Children.Add(vs1);
 
             Label titel = new Label();
-            titel.Text = book.Book.Title;
+            titel.Text = book.BookTitle;
             titel.LineBreakMode = LineBreakMode.WordWrap;
             titel.MaxLines = 3;
             titel.WidthRequest = 200;
@@ -73,7 +74,7 @@ public partial class UserRentedBooksPage : ContentPage
             Label rentDate = new Label();
             Label returnDate = new Label();
             rentDate.Text = "Lånt: " + book.StartDate.ToString("dd/MM/yyyy");
-            string returnStr = book.Book.Status == 1 ? "Aflereret: " : "Afleveres: ";
+            string returnStr = selectedBook.Status == 1 ? "Aflereret: " : "Afleveres: ";
             returnDate.Text = returnStr + book.EndDate.ToString("dd/MM/yyyy");
             vs2.Children.Add(rentDate);
             vs2.Children.Add(returnDate);
@@ -81,7 +82,7 @@ public partial class UserRentedBooksPage : ContentPage
             hs.Children.Add(vs2);
             Button button = new Button();
 
-            if(book.Book.Status == 1)
+            if(selectedBook.Status == 1)
             {
                 button.Text = "Aflevere bog";
                 button.Clicked += async (s, arg) =>
@@ -98,7 +99,7 @@ public partial class UserRentedBooksPage : ContentPage
             }
             else
             {
-                Book testBook = await api.getBook(book.Bookid);
+                Book testBook = await api.getBook(book.BookId);
                 if(testBook.Status == 0)
                 {
                     button.Text = "Udlånd bog Igen";

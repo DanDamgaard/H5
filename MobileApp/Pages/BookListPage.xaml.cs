@@ -73,6 +73,7 @@ public partial class BookListPage : ContentPage
 
         List<string> genre = new List<string>();
         List<string> auther = new List<string>();
+        List<string> publisher = new List<string>();
 
         foreach (Book book in bookList)
         {
@@ -84,6 +85,11 @@ public partial class BookListPage : ContentPage
             if (!auther.Contains(book.AuthorName))
             {
                 auther.Add(book.AuthorName);
+            }
+
+            if (!publisher.Contains(book.Publisher))
+            {
+                publisher.Add(book.Publisher);
             }
         }
 
@@ -163,6 +169,41 @@ public partial class BookListPage : ContentPage
                 changeStack = true;
             }
         }
+
+        foreach (string s in publisher)
+        {
+            HorizontalStackLayout stack = new HorizontalStackLayout();
+
+
+            Button btn = new Button();
+            btn.Text = s;
+            btn.Padding = 0;
+            btn.TextColor = Colors.Black;
+            btn.HeightRequest = 20;
+            btn.Background = Colors.Transparent;
+
+            CheckBox box = new CheckBox();
+
+            btn.Clicked += (s, arg) =>
+            {
+                box.IsChecked = !box.IsChecked;
+            };
+
+            stack.Children.Add(btn);
+            stack.Children.Add(box);
+
+
+            if (changeStack)
+            {
+                publisherStack1.Children.Add(stack);
+                changeStack = false;
+            }
+            else
+            {
+                publisherStack2.Children.Add(stack);
+                changeStack = true;
+            }
+        }
     }
 
     private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
@@ -208,6 +249,24 @@ public partial class BookListPage : ContentPage
             }
         }
 
+        foreach (HorizontalStackLayout h in publisherStack1)
+        {
+            CheckBox box = (CheckBox)h.Children[1];
+            if (box.IsChecked == true)
+            {
+                return true;
+            }
+        }
+
+        foreach (HorizontalStackLayout h in publisherStack2)
+        {
+            CheckBox box = (CheckBox)h.Children[1];
+            if (box.IsChecked == true)
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -225,6 +284,7 @@ public partial class BookListPage : ContentPage
         List<Book> searchBookList = new List<Book>();
         List<string> genreFilterList = new List<string>();
         List<string> autherFilterList = new List<string>();
+        List<string> publisherFilterList = new List<string>();
 
 
         if(!String.IsNullOrEmpty(searchBar.Text))
@@ -285,6 +345,30 @@ public partial class BookListPage : ContentPage
                 if (box.IsChecked == true)
                 {
                     autherFilterList.Add(genre);
+                }
+            }
+
+            foreach (HorizontalStackLayout h in publisherStack1)
+            {
+                Button btn = (Button)h.Children[0];
+                CheckBox box = (CheckBox)h.Children[1];
+                string genre = btn.Text;
+
+                if (box.IsChecked == true)
+                {
+                    publisherFilterList.Add(genre);
+                }
+            }
+
+            foreach (HorizontalStackLayout h in publisherStack2)
+            {
+                Button btn = (Button)h.Children[0];
+                CheckBox box = (CheckBox)h.Children[1];
+                string genre = btn.Text;
+
+                if (box.IsChecked == true)
+                {
+                    publisherFilterList.Add(genre);
                 }
             }
 
