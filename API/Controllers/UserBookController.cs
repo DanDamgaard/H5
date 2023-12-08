@@ -44,6 +44,13 @@ namespace API.Controllers
                     // Set IsRented to true
                     userBook.IsRented = true;
 
+                    // Set the book status to 1
+                    var book = await appDbContext.Book.FindAsync(userBook.BookId);
+                    if (book != null)
+                    {
+                        book.Status = 1;
+                    }
+
                     var result = appDbContext.UserBook.Add(userBook).Entity;
                     await appDbContext.SaveChangesAsync();
                     return Ok(result);
@@ -108,9 +115,6 @@ namespace API.Controllers
                     existingRental.StartDate = userBook.StartDate;
                     existingRental.EndDate = userBook.StartDate.AddDays(14);
 
-                    // Set IsRented to true
-                    existingRental.IsRented = true;
-
                     // Save changes to the database
                     appDbContext.UserBook.Update(existingRental);
                     await appDbContext.SaveChangesAsync();
@@ -147,7 +151,14 @@ namespace API.Controllers
                     existingRental.IsRented = false;
 
                     // Update the EndDate
-                    existingRental.EndDate = DateTime.UtcNow; 
+                    existingRental.EndDate = DateTime.UtcNow;
+                    
+                    // Set the book status to 0
+                    var book = await appDbContext.Book.FindAsync(userBook.BookId);
+                    if (book != null)
+                    {
+                        book.Status = 0;
+                    }
 
                     appDbContext.Entry(existingRental).State = EntityState.Modified;
 
