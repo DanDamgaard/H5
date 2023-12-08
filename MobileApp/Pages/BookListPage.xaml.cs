@@ -287,6 +287,8 @@ public partial class BookListPage : ContentPage
         List<string> publisherFilterList = new List<string>();
 
 
+        
+
         if(!String.IsNullOrEmpty(searchBar.Text))
         {
             foreach(Book book in bookList)
@@ -379,28 +381,29 @@ public partial class BookListPage : ContentPage
 
             foreach (Book book in data)
             {
-                if(genreFilterList.Count > 0 && autherFilterList.Count > 0)
-                {
-                    if (genreFilterList.Contains(book.Category) && autherFilterList.Contains(book.AuthorName))
-                    {
-                        newBookList.Add(book);
-                    }
-                }
-                else if(genreFilterList.Count > 0 && autherFilterList.Count == 0)
-                {
-                    if (genreFilterList.Contains(book.Category))
-                    {
-                        newBookList.Add(book);
-                    }
-                }
-                else
-                {
-                    if (autherFilterList.Contains(book.AuthorName))
-                    {
-                        newBookList.Add(book);
-                    }
-                }
+                newBookList.Add(book);
+            }
+
+            foreach (Book book in data)
+            {
                 
+                if (!genreFilterList.Contains(book.Category) && genreFilterList.Count > 0)
+                {
+                    newBookList.Remove(book);
+                }
+
+
+                if (!autherFilterList.Contains(book.AuthorName) && autherFilterList.Count > 0)
+                {
+                    newBookList.Remove(book);
+                }
+
+                
+                if (!publisherFilterList.Contains(book.Publisher) && publisherFilterList.Count > 0)
+                {
+                    newBookList.Remove(book);
+                }
+
             }
 
 
@@ -456,6 +459,18 @@ public partial class BookListPage : ContentPage
         }
 
         foreach (HorizontalStackLayout h in autherStack2)
+        {
+            CheckBox box = (CheckBox)h.Children[1];
+            box.IsChecked = false;
+        }
+
+        foreach (HorizontalStackLayout h in publisherStack1)
+        {
+            CheckBox box = (CheckBox)h.Children[1];
+            box.IsChecked = false;
+        }
+
+        foreach (HorizontalStackLayout h in publisherStack2)
         {
             CheckBox box = (CheckBox)h.Children[1];
             box.IsChecked = false;

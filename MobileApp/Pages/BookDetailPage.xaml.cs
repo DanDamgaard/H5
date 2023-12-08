@@ -38,7 +38,7 @@ public partial class BookDetailPage : ContentPage
     private async void RentBookBtn_Clicked(object sender, EventArgs e)
     {
         DateTime date = DateTime.Now;
-        RentedBook rentedBook = new RentedBook(0,_book.Id, Global.User.Id, _book.Title, Global.User.Name, date,date,true);
+        RentedBook rentedBook = new RentedBook(0 ,_book.Id, Global.User.Id, _book.Title, Global.User.Name, date, date, true);
 
         if(await api.rentBook(rentedBook))
         {
