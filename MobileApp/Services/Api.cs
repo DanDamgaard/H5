@@ -132,7 +132,7 @@ namespace MobileApp.Services
         }
         public async Task<bool> returnBook(RentedBook book)
         {
-            var response = await httpClient.PutAsJsonAsync($"{baseUrl}/api/UserBook/ReturnBook", book);
+            var response = await httpClient.PostAsJsonAsync($"{baseUrl}/api/UserBook/ReturnBook", book);
 
             if (response.IsSuccessStatusCode)
             {
@@ -146,7 +146,7 @@ namespace MobileApp.Services
 
         public async Task<bool> rentBook(RentedBook book)
         {
-            var response = await httpClient.PutAsJsonAsync($"{baseUrl}/api/UserBook/ReRentBook", book);
+            var response = await httpClient.PostAsJsonAsync($"{baseUrl}/api/UserBook/ReRentBook", book);
 
             if (response.IsSuccessStatusCode)
             {
@@ -160,7 +160,7 @@ namespace MobileApp.Services
 
         public async Task<bool> reRentBook(RentedBook book)
         {
-            var response = await httpClient.PutAsJsonAsync($"{baseUrl}/api/UserBook/ReRentBook", book);
+            var response = await httpClient.PostAsJsonAsync($"{baseUrl}/api/UserBook/ReRentBook", book);
 
             if (response.IsSuccessStatusCode)
             {

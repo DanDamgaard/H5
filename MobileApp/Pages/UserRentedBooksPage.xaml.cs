@@ -1,5 +1,6 @@
 using MobileApp.Classes;
 using MobileApp.Services;
+using System.Text.Json;
 
 namespace MobileApp.Pages;
 
@@ -46,6 +47,8 @@ public partial class UserRentedBooksPage : ContentPage
 
     private async void createBookList()
     {
+        UserStack.Clear();
+
         foreach (RentedBook book in rentedBooks)
         {
             Book selectedBook = await api.getBook(book.BookId);
@@ -82,7 +85,10 @@ public partial class UserRentedBooksPage : ContentPage
             hs.Children.Add(vs2);
             Button button = new Button();
 
-            if(selectedBook.Status == 1)
+            string jsonString = JsonSerializer.Serialize(book);
+            Console.WriteLine(jsonString);
+
+            if(book.IsRented)
             {
                 button.Text = "Aflevere bog";
                 button.Clicked += async (s, arg) =>
@@ -90,6 +96,7 @@ public partial class UserRentedBooksPage : ContentPage
                     if(await api.returnBook(book))
                     {
                         await DisplayAlert("Succes", "Bogen blev afleveret", "OK");
+                        createBookList();
                     }
                     else
                     {
@@ -99,8 +106,7 @@ public partial class UserRentedBooksPage : ContentPage
             }
             else
             {
-                Book testBook = await api.getBook(book.BookId);
-                if(testBook.Status == 0)
+                if(selectedBook.Status == 0)
                 {
                     button.Text = "Udlånd bog Igen";
                     button.Clicked += async (s, arg) =>
@@ -108,13 +114,13 @@ public partial class UserRentedBooksPage : ContentPage
                         if (await api.reRentBook(book))
                         {
                             await DisplayAlert("Succes", "Du har udlånt bogen", "OK");
+                            createBookList();
                         }
                         else
                         {
                             await DisplayAlert("Fejl", "Nået gik galt prøv igen senere", "OK");
                         }
                     };
-
                 }
                 else
                 {
