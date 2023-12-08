@@ -14,6 +14,7 @@
             <Button HorizontalOptions="Start" TextColor="Black" Padding="0" Margin="0,0" WidthRequest="15" Background="Transparent" HeightRequest="18" FontFamily="FaRegular" Clicked="userBtn_Clicked" Text="{ x:Static Classes:FaRegular.User}"></Button>
         </HorizontalStackLayout>
         <Button x:Name="BookListBtn" Text="Udforsk bøger" Clicked="BookListBtn_Clicked"></Button>
+        <Button x:Name="RentedBooksBtn" Text="Se dine bøger" Clicked="RentedBooksBtn_Clicked"/>
         <Button x:Name="logoutBtn" VerticalOptions="End" Clicked="logoutBtn_Clicked" Text="Log ud"></Button>
 
     </VerticalStackLayout>

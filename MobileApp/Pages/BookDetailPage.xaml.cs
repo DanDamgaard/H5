@@ -35,11 +35,23 @@ public partial class BookDetailPage : ContentPage
         descBookLabel.Text = book.Description;
     }
 
-    private void RentBookBtn_Clicked(object sender, EventArgs e)
+    private async void RentBookBtn_Clicked(object sender, EventArgs e)
     {
-        statusLabel.Text = "Udlånt";
-        statusLabel.TextColor = Colors.Red;
-        RentBookBtn.IsVisible = false;
+        DateTime date = DateTime.Now;
+        RentedBook rentedBook = new RentedBook(0, Global.User.Id, _book.Id, date,date ,Global.User, _book);
+
+        if(await api.rentBook(rentedBook))
+        {
+            statusLabel.Text = "Udlånt";
+            statusLabel.TextColor = Colors.Red;
+            RentBookBtn.IsVisible = false;
+            await DisplayAlert("Sucess", "Du har lånt bogen", "OK");
+        }
+        else
+        {
+            await DisplayAlert("Fejl", "Nået gik galt", "OK");
+        }
+        
     }
 
     private async void BookHistoryBtn_Clicked(object sender, EventArgs e)
