@@ -104,13 +104,29 @@ namespace API.Controllers
             {
                 return NotFound("Book not found");
             }
+            // Check if the author is exists
+            var existingAuthor = appDbContext.Author.FirstOrDefault(a => a.Name == updatedBook.Author.Name);
 
+            if (existingAuthor != null)
+            {
+                // Author exists, assign the existing author to the book
+                existingBook.Author = existingAuthor;
+            }
+            else
+            {
+                // Author doesn't exist, create a new author
+                Author newAuthor = new Author { Name = updatedBook.Author?.Name };
+                appDbContext.Author.Add(newAuthor);
+                await appDbContext.SaveChangesAsync();
+
+                // Assign the new author to the book
+                existingBook.Author = newAuthor;
+            }
             // Update the properties of the existing book
             existingBook.Title = updatedBook.Title;
             existingBook.Category = updatedBook.Category;
             existingBook.Description = updatedBook.Description;
             existingBook.Image = updatedBook.Image;
-            existingBook.AuthorId = updatedBook.AuthorId;
             existingBook.Publisher = updatedBook.Publisher;
             existingBook.Status = updatedBook.Status;
 
