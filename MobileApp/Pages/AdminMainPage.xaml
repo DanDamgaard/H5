@@ -12,6 +12,7 @@
         <VerticalStackLayout Spacing="25">
             <Button x:Name="UsersBtn" Clicked="UsersBtn_Clicked" Text="Se Brugere"></Button>
             <Button x:Name="BookListBtn" Clicked="BookListBtn_Clicked" Text="Se alle Bøger"></Button>
+            <Button x:Name="CreateBookBtn" Text="Opret ny bog" Clicked="CreateBookBtn_Clicked"></Button>
             <Button x:Name="logoutBtn" VerticalOptions="End" Clicked="logoutBtn_Clicked" Text="Log ud"></Button>
         </VerticalStackLayout>
         
