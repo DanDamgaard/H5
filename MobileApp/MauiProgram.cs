@@ -30,6 +30,13 @@ namespace MobileApp
                 #endif
             });
 
+            Microsoft.Maui.Handlers.EditorHandler.Mapper.AppendToMapping(nameof(Editor), (handler, view) =>
+            {
+                #if ANDROID
+                                        handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                #endif
+            });
+
             Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping(nameof(SearchBar), (handler, view) =>
             {
                 #if ANDROID

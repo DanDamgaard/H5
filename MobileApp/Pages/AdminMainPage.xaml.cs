@@ -28,4 +28,9 @@ public partial class AdminMainPage : ContentPage
     {
         await Navigation.PushModalAsync(new BookListPage());
     }
+
+    private async void CreateBookBtn_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushModalAsync(new AdminCreateBook());
+    }
 }

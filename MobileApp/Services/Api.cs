@@ -13,8 +13,9 @@ namespace MobileApp.Services
     {
         private HttpClient httpClient = new HttpClient();
         private string baseUrl = DeviceInfo.Platform == DevicePlatform.Android
-             ? "http://10.0.2.2:5131"
-             : "http://localhost:5131";
+        ? "http://10.0.2.2:5131"
+        : "http://localhost:5131";
+        //private string baseUrl = "http://dantdamgaard.dk";
 
         public async Task<bool> Login(string username, string password)
         {
@@ -113,6 +114,48 @@ namespace MobileApp.Services
             var result = await response.Content.ReadAsStringAsync();
             List<Book> data = JsonConvert.DeserializeObject<List<Book>>(result);
             return data;
+        }
+
+        public async Task<bool> createBook(BookUpload book)
+        {
+            var response = await httpClient.PostAsJsonAsync($"{baseUrl}/api/Book/AddBook", book);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> editBook(int id,BookUpload book)
+        {
+            var response = await httpClient.PutAsJsonAsync($"{baseUrl}/api/Book/UpdateBook/{id}", book);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> deleteBook(int id)
+        {
+            var response = await httpClient.DeleteAsync($"{baseUrl}/api/Book/DeleteBook/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<Book> getBook(int id)

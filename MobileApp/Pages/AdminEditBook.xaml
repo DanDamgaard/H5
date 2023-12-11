@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MobileApp.Pages.AdminEditBook"
+             Title="AdminEditBook">
+    <ScrollView Padding="0" WidthRequest="300">
+        <VerticalStackLayout HorizontalOptions="Center" Padding="10" Spacing="30">
+            <Label Text="Title" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+            <Frame WidthRequest="250" HeightRequest="50" Padding="0" >
+                <Entry x:Name="TitleBox" Placeholder="Skriv bog titel" Completed="TitleBox_Completed" HeightRequest="40" Margin="10,0,0,0">
+                    <Entry.Behaviors>
+                        <toolkit:TextValidationBehavior
+                x:Name="titleValidator"
+                Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                MinimumLength="1"    
+            />
+                    </Entry.Behaviors>
+                </Entry>
+            </Frame>
+            <Label Text="Beskrivelse" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+            <Frame WidthRequest="250" HeightRequest="300" Padding="0,0,0,5" >
+                <Editor x:Name="DescBox" MaxLength="255" Placeholder="Skriv Beskrivelse" Completed="DescBox_Completed" HeightRequest="250" Margin="10,0,0,0">
+                    <Editor.Behaviors>
+                        <toolkit:TextValidationBehavior
+                x:Name="descValidator"
+                Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                MinimumLength="1"
+            />
+                    </Editor.Behaviors>
+                </Editor>
+            </Frame>
+            <Label Text="Genre" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+            <Frame WidthRequest="250" HeightRequest="50" Padding="0">
+                <Entry x:Name="GenreBox" Placeholder="Skriv genre" Completed="GenreBox_Completed" HeightRequest="40" Margin="10,0,0,0">
+                    <Entry.Behaviors>
+                        <toolkit:TextValidationBehavior
+                x:Name="genreValidator"
+                Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                MinimumLength="1"
+            />
+                    </Entry.Behaviors>
+                </Entry>
+            </Frame>
+            <Label Text="Forfatter" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+            <Frame WidthRequest="250" HeightRequest="50" Padding="0">
+                <Entry x:Name="AutherBox" Placeholder="Skriv forfatter" Completed="AutherBox_Completed" HeightRequest="40" Margin="10,0,0,0">
+                    <Entry.Behaviors>
+                        <toolkit:TextValidationBehavior
+                x:Name="autherValidator"    
+                Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                MinimumLength="1"
+            />
+                    </Entry.Behaviors>
+                </Entry>
+            </Frame>
+            <Label Text="Forlag" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+            <Frame WidthRequest="250" HeightRequest="50" Padding="0">
+                <Entry x:Name="PublisherBox" Placeholder="Skriv forlag" Completed="PublisherBox_Completed" HeightRequest="40" Margin="10,0,0,0">
+                    <Entry.Behaviors>
+                        <toolkit:TextValidationBehavior
+                x:Name="publisherValidator"
+                Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                MinimumLength="1"
+            />
+                    </Entry.Behaviors>
+                </Entry>
+            </Frame>
+
+            <Label Text="Forside Billede" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+            <VerticalStackLayout>
+                <Label x:Name="PicNameLabel" Text="Ingen billed er valgt" HorizontalOptions="Center"></Label>
+                <Button x:Name="PickIamegBtn" Text="Vælg billede" Clicked="PickIamegBtn_Clicked"></Button>
+            </VerticalStackLayout>
+
+            <Button x:Name="editBookBtn" Text="Opret bog" Clicked="editBookBtn_Clicked"></Button>
+            <Button x:Name="cancelBtn" Text="Annuller" Clicked="cancelBtn_Clicked"></Button>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

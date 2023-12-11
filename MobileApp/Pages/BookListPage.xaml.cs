@@ -2,6 +2,7 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui;
 using MobileApp.Classes;
 using MobileApp.Services;
+using System.Diagnostics;
 namespace MobileApp.Pages;
 
 public partial class BookListPage : ContentPage
@@ -43,13 +44,47 @@ public partial class BookListPage : ContentPage
 
             if(Global.User.Roles == 1)
             {
-                Button btn = new Button();
-                btn.Text = "Se historik";
-                btn.Clicked += (s, arg) =>
+                Button editBtn = new Button();
+                editBtn.Text = "Ret bog";
+                editBtn.Clicked += async (s, arg) =>
                 {
-                    Navigation.PushModalAsync(new BookHistoryPage(book));
+                    await Navigation.PushModalAsync(new AdminEditBook(book));
                 };
-                stack.Children.Add(btn);
+
+                Button historybtn = new Button();
+                historybtn.Text = "Se historik";
+                historybtn.Clicked += async (s, arg) =>
+                {
+                   await Navigation.PushModalAsync(new BookHistoryPage(book));
+                };
+
+                Button deleteBtn = new Button();
+                deleteBtn.Text = "Slet bog";
+                deleteBtn.Background = Colors.Red;
+                deleteBtn.Clicked += async (s, arg) =>
+                {
+                    bool answer = await DisplayAlert("Advarsel", "Er du sikker på at du vil slette denne bog", "Ja", "Nej");
+                    if(answer)
+                    {
+                        if(await api.deleteBook(book.Id))
+                        {
+                            await DisplayAlert("Succes", "Bogen blev slettet", "OK");
+                            GetBooks();
+                        }
+                        else
+                        {
+                            await DisplayAlert("Fejl", "Kunne ikke slette bogen", "OK");
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                };
+
+                stack.Children.Add(editBtn);
+                stack.Children.Add(historybtn);
+                stack.Children.Add(deleteBtn);
             }
 
             stack.Children.Add(button);
