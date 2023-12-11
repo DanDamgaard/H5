@@ -78,7 +78,8 @@ namespace API.Controllers
                         BookTitle = ub.Book.Title,
                         UserName = ub.User.Name,
                         StartDate = ub.StartDate,
-                        EndDate = ub.EndDate
+                        EndDate = ub.EndDate,
+                        IsRented= ub.IsRented
                     }).ToListAsync();
 
                 return Ok(rentedBooks);
