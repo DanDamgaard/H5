@@ -27,7 +27,7 @@ public partial class BookHistoryPage : ContentPage
 
         BookTitelLabel.Text = _book.Title;
 
-        List<RentedBook> rentedBooks = await api.getRentedBooks();
+        List<RentedBook> rentedBooks = await api.getUsersAndRentedBooks();
         foreach(RentedBook book in rentedBooks)
         {
             if(book.BookId == _book.Id)
