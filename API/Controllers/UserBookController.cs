@@ -39,6 +39,7 @@ namespace API.Controllers
                     }
 
                     // Set the EndDate to StartDate + 14 days
+                    userBook.StartDate = DateTime.Now;
                     userBook.EndDate = userBook.StartDate.AddDays(14);
 
                     // Set IsRented to true
@@ -141,8 +142,8 @@ namespace API.Controllers
                     }
 
                     // Update StartDate and EndDate
-                    existingRental.StartDate = userBook.StartDate;
-                    existingRental.EndDate = userBook.StartDate.AddDays(14);
+                    existingRental.StartDate = DateTime.Now;
+                    existingRental.EndDate = existingRental.StartDate.AddDays(14);
 
                     // Save changes to the database
                     appDbContext.UserBook.Update(existingRental);
@@ -159,46 +160,50 @@ namespace API.Controllers
         [HttpPost("ReturnBook")]
         public async Task<ActionResult<UserBook>> ReturnBook(UserBook userBook)
         {
-            if (userBook != null)
+            try
             {
-                // Ensure that the book and user exist
-                var bookExists = await appDbContext.Book.AnyAsync(b => b.Id == userBook.BookId);
-                var userExists = await appDbContext.User.AnyAsync(u => u.Id == userBook.UserId);
-
-                if (bookExists && userExists)
+                if (userBook != null)
                 {
-                    // Check if the user has rented the book
-                    var existingRental = await appDbContext.UserBook
-                        .FirstOrDefaultAsync(ub => ub.BookId == userBook.BookId && ub.UserId == userBook.UserId);
+                    // Ensure that the book and user exist
+                    var bookExists = await appDbContext.Book.AnyAsync(b => b.Id == userBook.BookId);
+                    var userExists = await appDbContext.User.AnyAsync(u => u.Id == userBook.UserId);
 
-                    if (existingRental == null)
+                    if (bookExists && userExists)
                     {
-                        return BadRequest("User has not rented this book");
+                        // Check if the user has rented the book
+                        var existingRental = await appDbContext.UserBook
+                            .FirstOrDefaultAsync(ub => ub.BookId == userBook.BookId && ub.UserId == userBook.UserId && ub.IsRented);
+
+                        if (existingRental == null)
+                        {
+                            return BadRequest("User has not rented this book");
+                        }              
+
+                        // Set IsRented to false
+                        existingRental.IsRented = false;
+
+                        // Update the EndDate to the current time
+                        existingRental.EndDate = DateTime.Now;
+
+                        // Set the book status to 0
+                        var book = await appDbContext.Book.FindAsync(userBook.BookId);
+                        if (book != null)
+                        {
+                            book.Status = 0;
+                        }
+
+                        await appDbContext.SaveChangesAsync();
+
+                        return Ok(existingRental);
                     }
-
-                    // Set IsRented to false
-                    existingRental.IsRented = false;
-
-                    // Update the EndDate
-                    existingRental.EndDate = DateTime.UtcNow;
-                    
-                    // Set the book status to 0
-                    var book = await appDbContext.Book.FindAsync(userBook.BookId);
-                    if (book != null)
-                    {
-                        book.Status = 0;
-                    }
-
-                    appDbContext.Entry(existingRental).State = EntityState.Modified;
-
-                    // Save the changes to the database
-                    await appDbContext.SaveChangesAsync();
-
-                    return Ok(existingRental);
+                    return BadRequest("Invalid Book or User");
                 }
-                return BadRequest("Invalid Book or User");
+                return BadRequest("Invalid Request");
             }
-            return BadRequest("Invalid Request");
-        }       
+            catch (Exception ex)
+            {          
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }
