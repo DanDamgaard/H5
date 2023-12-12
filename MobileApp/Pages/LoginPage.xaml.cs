@@ -35,7 +35,6 @@ public partial class LoginPage : ContentPage
 
     private async void login()
     {
-
         if (emailValidator.IsNotValid)
         {
             foreach (var error in emailValidator.Errors)
@@ -59,7 +58,7 @@ public partial class LoginPage : ContentPage
 
         //string hashPass = passBox.Text;
 
-        if (await _api.Login(emailBox.Text, hashPass)){
+        if (await _api.Login(emailBox.Text.Trim(), hashPass)){
 
             Preferences.Default.Set("EmailKey", emailBox.Text);
             Preferences.Default.Set("PassKey", hashPass);

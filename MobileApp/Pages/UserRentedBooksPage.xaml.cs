@@ -83,52 +83,49 @@ public partial class UserRentedBooksPage : ContentPage
             vs2.Children.Add(returnDate);
 
             hs.Children.Add(vs2);
-            Button button = new Button();
+            Button returnButton = new Button();
+            Button extendButton = new Button();
 
             string jsonString = JsonSerializer.Serialize(book);
             Console.WriteLine(jsonString);
 
-            if(book.IsRented)
+
+            returnButton.Text = "Aflevere Bog";
+            returnButton.Background = Colors.Red;
+            returnButton.Clicked += async (s, arg) =>
             {
-                button.Text = "Aflevere bog";
-                button.Clicked += async (s, arg) =>
+                if(await api.returnBook(book))
                 {
-                    if(await api.returnBook(book))
-                    {
-                        await DisplayAlert("Succes", "Bogen blev afleveret", "OK");
-                        createBookList();
-                    }
-                    else
-                    {
-                        await DisplayAlert("Fejl", "Nået gik galt prøv igen senere", "OK");
-                    }
-                };
-            }
-            else
-            {
-                if(selectedBook.Status == 0)
-                {
-                    button.Text = "Udlånd bog Igen";
-                    button.Clicked += async (s, arg) =>
-                    {
-                        if (await api.reRentBook(book))
-                        {
-                            await DisplayAlert("Succes", "Du har udlånt bogen", "OK");
-                            createBookList();
-                        }
-                        else
-                        {
-                            await DisplayAlert("Fejl", "Nået gik galt prøv igen senere", "OK");
-                        }
-                    };
+                    await DisplayAlert("Succes", "Bogen blev afleveret " + book.Id.ToString(), "OK");
+                    rentedBooks.Remove(book);
+                    createBookList();
                 }
                 else
                 {
-                    button.IsVisible = false;
+                    await DisplayAlert("Fejl", "Nået gik galt prøv igen senere", "OK");
                 }
-            }
-            
-            vs2.Children.Add(button);
+            };
+
+            extendButton.Text = "Forlæng Udlejning";
+            extendButton.Clicked += async (s, arg) =>
+            {
+                if (await api.reRentBook(book))
+                {
+                    await DisplayAlert("Succes", "Bogen blev afleveret " + book.Id.ToString(), "OK");
+                    book.EndDate = book.EndDate.AddDays(14);
+                    createBookList();
+                }
+                else
+                {
+                    await DisplayAlert("Fejl", "Nået gik galt prøv igen senere", "OK");
+                }
+            };
+
+
+
+
+            vs2.Children.Add(returnButton);
+            vs2.Children.Add(extendButton);
 
             UserStack.Add(hs);
         }

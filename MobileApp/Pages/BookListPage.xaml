@@ -22,10 +22,18 @@
                             <VerticalStackLayout x:Name="autherStack2">
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
+                        <Label Text="Forlag:" TextDecorations="Underline" HorizontalOptions="Center"></Label>
                         <HorizontalStackLayout Margin="0,0,0,20">
-                            <VerticalStackLayout x:Name="publisherStack1">
+                            <VerticalStackLayout x:Name="publisherStack" HorizontalOptions="Center">
                             </VerticalStackLayout>
-                            <VerticalStackLayout x:Name="publisherStack2">
+                        </HorizontalStackLayout>
+                        <Label Text="Status:" TextDecorations="Underline" HorizontalOptions="Center"></Label>
+                        <HorizontalStackLayout Margin="0,0,0,20">
+                            <VerticalStackLayout x:Name="statusStack" HorizontalOptions="Center">
+                                <HorizontalStackLayout HorizontalOptions="End">
+                                    <Button x:Name="StatusTextBtn" Text="Se kun Ledig bøger" Background="Transparent" TextColor="Black" HeightRequest="20" Padding="0" Clicked="StatusTextBtn_Clicked"/>
+                                    <CheckBox x:Name="StatusBox" IsChecked="False"></CheckBox>
+                                </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                         <Button x:Name="ClearFilterBtn" Text="Rens filter" Margin="0,10" Clicked="ClearFilterBtn_Clicked"></Button>
