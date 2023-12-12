@@ -18,6 +18,7 @@ public partial class UserRentedBooksPage : ContentPage
 
     private async void getRentedBooks()
     {
+        UserStack.Clear();
         List<RentedBook> books = await api.getRentedBooks();
 
 
@@ -39,7 +40,7 @@ public partial class UserRentedBooksPage : ContentPage
             label.HorizontalOptions = LayoutOptions.Center;
             label.VerticalOptions = LayoutOptions.Center;
             label.FontSize = 18;
-            label.Text = "Bruger har ingen udlejninger";
+            label.Text = Global.User == _user ? "Du har ingen udlejninger" : "Bruger har ingen udlejninger";
             UserStack.Add(label);
         }
 
@@ -96,9 +97,9 @@ public partial class UserRentedBooksPage : ContentPage
             {
                 if(await api.returnBook(book))
                 {
-                    await DisplayAlert("Succes", "Bogen blev afleveret " + book.Id.ToString(), "OK");
+                    await DisplayAlert("Succes", "Bogen blev afleveret", "OK");
                     rentedBooks.Remove(book);
-                    createBookList();
+                    getRentedBooks();
                 }
                 else
                 {
@@ -111,7 +112,7 @@ public partial class UserRentedBooksPage : ContentPage
             {
                 if (await api.reRentBook(book))
                 {
-                    await DisplayAlert("Succes", "Bogen blev afleveret " + book.Id.ToString(), "OK");
+                    await DisplayAlert("Succes", "Bogen blev afleveret", "OK");
                     book.EndDate = book.EndDate.AddDays(14);
                     createBookList();
                 }

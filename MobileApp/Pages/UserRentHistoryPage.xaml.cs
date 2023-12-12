@@ -39,7 +39,7 @@ public partial class UserRentHistoryPage : ContentPage
             label.HorizontalOptions = LayoutOptions.Center;
             label.VerticalOptions = LayoutOptions.Center;
             label.FontSize = 18;
-            label.Text = "Bruger har ingen udlejninger";
+            label.Text = Global.User == _user ? "Du har ingen udlejninger" : "Bruger har ingen udlejninger";
             UserStack.Add(label);
         }
         
