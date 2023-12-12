@@ -6,7 +6,7 @@ namespace API.Models
 {
     public class UserBook
     {
-        [Key]
+        [Key, JsonIgnore]
         public int Id { get; set; }
 
         [Required, ForeignKey("User")]
