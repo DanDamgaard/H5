@@ -18,7 +18,7 @@ public partial class UserRentHistoryPage : ContentPage
 
     private async void getRentedBooks()
     {
-        List<RentedBook> books = await api.getRentedBooks();
+        List<RentedBook> books = await api.getUsersAndRentedBooks();
 
         
         foreach (RentedBook book in books)

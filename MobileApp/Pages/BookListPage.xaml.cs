@@ -129,7 +129,6 @@ public partial class BookListPage : ContentPage
         }
 
 
-
         bool changeStack = true;
 
         foreach (string s in genre)
@@ -205,10 +204,11 @@ public partial class BookListPage : ContentPage
             }
         }
 
+
         foreach (string s in publisher)
         {
             HorizontalStackLayout stack = new HorizontalStackLayout();
-
+            stack.HorizontalOptions = LayoutOptions.End;
 
             Button btn = new Button();
             btn.Text = s;
@@ -227,17 +227,9 @@ public partial class BookListPage : ContentPage
             stack.Children.Add(btn);
             stack.Children.Add(box);
 
-
-            if (changeStack)
-            {
-                publisherStack1.Children.Add(stack);
-                changeStack = false;
-            }
-            else
-            {
-                publisherStack2.Children.Add(stack);
-                changeStack = true;
-            }
+            
+            publisherStack.Children.Add(stack);
+            
         }
     }
 
@@ -284,7 +276,7 @@ public partial class BookListPage : ContentPage
             }
         }
 
-        foreach (HorizontalStackLayout h in publisherStack1)
+        foreach (HorizontalStackLayout h in publisherStack)
         {
             CheckBox box = (CheckBox)h.Children[1];
             if (box.IsChecked == true)
@@ -293,14 +285,7 @@ public partial class BookListPage : ContentPage
             }
         }
 
-        foreach (HorizontalStackLayout h in publisherStack2)
-        {
-            CheckBox box = (CheckBox)h.Children[1];
-            if (box.IsChecked == true)
-            {
-                return true;
-            }
-        }
+        if (StatusBox.IsChecked == true) return true;
 
         return false;
     }
@@ -385,7 +370,7 @@ public partial class BookListPage : ContentPage
                 }
             }
 
-            foreach (HorizontalStackLayout h in publisherStack1)
+            foreach (HorizontalStackLayout h in publisherStack)
             {
                 Button btn = (Button)h.Children[0];
                 CheckBox box = (CheckBox)h.Children[1];
@@ -397,17 +382,6 @@ public partial class BookListPage : ContentPage
                 }
             }
 
-            foreach (HorizontalStackLayout h in publisherStack2)
-            {
-                Button btn = (Button)h.Children[0];
-                CheckBox box = (CheckBox)h.Children[1];
-                string genre = btn.Text;
-
-                if (box.IsChecked == true)
-                {
-                    publisherFilterList.Add(genre);
-                }
-            }
 
             if (searchBookList.Count > 0)
             {
@@ -416,8 +390,19 @@ public partial class BookListPage : ContentPage
 
             foreach (Book book in data)
             {
-                newBookList.Add(book);
+                if (StatusBox.IsChecked)
+                {
+                    if(book.Status == 0)
+                    {
+                        newBookList.Add(book);
+                    }
+                }
+                else
+                {
+                    newBookList.Add(book);
+                }
             }
+
 
             foreach (Book book in data)
             {
@@ -440,7 +425,6 @@ public partial class BookListPage : ContentPage
                 }
 
             }
-
 
         }
         
@@ -499,16 +483,24 @@ public partial class BookListPage : ContentPage
             box.IsChecked = false;
         }
 
-        foreach (HorizontalStackLayout h in publisherStack1)
+        foreach (HorizontalStackLayout h in publisherStack)
         {
             CheckBox box = (CheckBox)h.Children[1];
             box.IsChecked = false;
         }
 
-        foreach (HorizontalStackLayout h in publisherStack2)
+        StatusBox.IsChecked = false;
+    }
+
+    private void StatusTextBtn_Clicked(object sender, EventArgs e)
+    {
+        if (StatusBox.IsChecked)
         {
-            CheckBox box = (CheckBox)h.Children[1];
-            box.IsChecked = false;
+            StatusBox.IsChecked = false;
+        }
+        else
+        {
+            StatusBox.IsChecked = true;
         }
     }
 }

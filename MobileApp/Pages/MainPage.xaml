@@ -15,6 +15,7 @@
         </HorizontalStackLayout>
         <Button x:Name="BookListBtn" Text="Udforsk bøger" Clicked="BookListBtn_Clicked"></Button>
         <Button x:Name="RentedBooksBtn" Text="Se dine bøger" Clicked="RentedBooksBtn_Clicked"/>
+        <Button x:Name="RentHistory" Text="Se din historik" Clicked="RentHistory_Clicked"/>
         <Button x:Name="logoutBtn" VerticalOptions="End" Clicked="logoutBtn_Clicked" Text="Log ud"></Button>
 
     </VerticalStackLayout>

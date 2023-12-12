@@ -73,7 +73,7 @@
                 <Button x:Name="PickIamegBtn" Text="Vælg billede" Clicked="PickIamegBtn_Clicked"></Button>
             </VerticalStackLayout>
 
-            <Button x:Name="editBookBtn" Text="Opret bog" Clicked="editBookBtn_Clicked"></Button>
+            <Button x:Name="editBookBtn" Text="Opdatere bog" Clicked="editBookBtn_Clicked"></Button>
             <Button x:Name="cancelBtn" Text="Annuller" Clicked="cancelBtn_Clicked"></Button>
         </VerticalStackLayout>
     </ScrollView>
