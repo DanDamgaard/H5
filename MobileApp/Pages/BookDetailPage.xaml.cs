@@ -30,7 +30,7 @@ public partial class BookDetailPage : ContentPage
         {
             statusLabel.Text = "Ledig";
             statusLabel.TextColor = Colors.Green;
-            RentBookBtn.IsVisible = true;
+            if(Global.User.Roles == 0) RentBookBtn.IsVisible = true;
         }
         descBookLabel.Text = book.Description;
     }

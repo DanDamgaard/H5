@@ -14,7 +14,6 @@ public partial class LoginPage : ContentPage
     public LoginPage()
 	{
 		InitializeComponent();
-        //Application.Current.MainPage = new LoginPage();
     }
 
     private string Hash(string str)
@@ -54,7 +53,7 @@ public partial class LoginPage : ContentPage
             return;
         }
 
-        string hashPass = Hash(passBox.Text);
+        string hashPass = Hash(passBox.Text.Trim());
 
         //string hashPass = passBox.Text;
 
