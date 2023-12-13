@@ -21,6 +21,7 @@ public partial class BookDetailPage : ContentPage
         bookTitleLabel.Text = book.Title;
         BookImage.Source = book.Image;
         AutherLabel.Text = "Forfatter: " + book.AuthorName;
+        GenreLabel.Text = "Genre: " + book.Category;
         if (book.Status == 1)
         {
             statusLabel.Text = "Udlånt";

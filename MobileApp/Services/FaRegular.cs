@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MobileApp.Classes
+namespace MobileApp.Services
 {
     public static class FaRegular
     {

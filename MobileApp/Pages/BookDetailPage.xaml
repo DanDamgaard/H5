@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApp.Pages.BookDetailPage"
              Title="BookDetailPage">
-    <VerticalStackLayout>
+    <ScrollView>
         <VerticalStackLayout Padding="25" Spacing="25" WidthRequest="300">
             <Label 
             x:Name="bookTitleLabel"
@@ -17,6 +17,7 @@
                 <Label x:Name="statusLabel"/>
             </HorizontalStackLayout>
             <Label x:Name="AutherLabel" HorizontalOptions="Center"/>
+            <Label x:Name="GenreLabel" HorizontalOptions="Center"/>
             <Button x:Name="RentBookBtn" Text="Udlej bog" IsVisible="false" Clicked="RentBookBtn_Clicked"></Button>
             <Button x:Name="BookHistoryBtn" IsVisible="false" Clicked="BookHistoryBtn_Clicked"></Button>
             <VerticalStackLayout Spacing="10">
@@ -26,5 +27,5 @@
             
         </VerticalStackLayout>
         
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
