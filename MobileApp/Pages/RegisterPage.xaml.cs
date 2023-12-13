@@ -81,14 +81,14 @@ public partial class RegisterPage : ContentPage
 			return;
 		}
 
-		string hashPass = Hash(passBox.Text);
+		string hashPass = Hash(passBox.Text.Trim());
 		
-		User user = new User(0,nameBox.Text, hashPass, emailBox.Text.ToLower(), phoneBox.Text, addressBox.Text, 0);
+		User user = new User(0,nameBox.Text, hashPass, emailBox.Text.ToLower().Trim(), phoneBox.Text, addressBox.Text, 0);
 
 		if(await api.CreateUser(user))
 		{
 			await DisplayAlert("Succes", "Din bruger er blevet oprettet", "OK");
-            await Navigation.PushModalAsync(new LoginPage());
+            await Navigation.PopModalAsync();
 		}
 		else
 		{

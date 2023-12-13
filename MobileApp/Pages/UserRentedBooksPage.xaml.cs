@@ -78,7 +78,7 @@ public partial class UserRentedBooksPage : ContentPage
             Label rentDate = new Label();
             Label returnDate = new Label();
             rentDate.Text = "Lånt: " + book.StartDate.ToString("dd/MM/yyyy");
-            string returnStr = selectedBook.Status == 1 ? "Aflereret: " : "Afleveres: ";
+            string returnStr = "Afleverings dato: ";
             returnDate.Text = returnStr + book.EndDate.ToString("dd/MM/yyyy");
             vs2.Children.Add(rentDate);
             vs2.Children.Add(returnDate);

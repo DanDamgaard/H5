@@ -75,7 +75,7 @@ public partial class UserRentHistoryPage : ContentPage
             Label rentDate = new Label();
             Label returnDate = new Label();
             rentDate.Text = "Lånt: " + book.StartDate.ToString("dd/MM/yyyy");
-            returnDate.Text = "Afleveret: " + book.EndDate.ToString("dd/MM/yyyy");
+            returnDate.Text = "Afleverings dato: " + book.EndDate.ToString("dd/MM/yyyy");
             vs2.Children.Add(rentDate);
             vs2.Children.Add(returnDate);
 
