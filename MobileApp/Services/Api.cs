@@ -182,6 +182,14 @@ namespace MobileApp.Services
             return data;
         }
 
+        public async Task<List<RentedBook>> getOverdueBooks()
+        {
+            var response = await httpClient.GetAsync($"{baseUrl}/api/UserBook/GetOverdueBooks");
+            var result = await response.Content.ReadAsStringAsync();
+            List<RentedBook> data = JsonConvert.DeserializeObject<List<RentedBook>>(result);
+            return data;
+        }
+
         public async Task<bool> returnBook(RentedBook book)
         {
             var response = await httpClient.PostAsJsonAsync($"{baseUrl}/api/UserBook/ReturnBook", book);
