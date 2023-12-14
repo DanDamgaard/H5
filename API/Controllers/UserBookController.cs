@@ -205,5 +205,35 @@ namespace API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        // Get overdue books
+        [HttpGet("GetOverdueBooks")]
+        public async Task<ActionResult<IEnumerable<UserBook>>> GetOverdueBooks()
+        {
+            try
+            {
+                var overdueBooks = await appDbContext.UserBook
+                    .Where(ub => ub.IsRented && ub.EndDate < DateTime.Now)
+                    .Include(ub => ub.Book)
+                    .Include(ub => ub.User)
+                    .Select(ub => new
+                    {
+                        Id = ub.Id,
+                        BookId = ub.BookId,
+                        UserId = ub.UserId,
+                        BookTitle = ub.Book.Title,
+                        UserName = ub.User.Name,
+                        StartDate = ub.StartDate,
+                        EndDate = ub.EndDate,
+                        IsRented = ub.IsRented
+                    }).ToListAsync();
+
+                return Ok(overdueBooks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }

@@ -96,7 +96,7 @@ namespace API.Controllers
 
         // Update book data
         [HttpPut("UpdateBook/{id}")]
-        public async Task<ActionResult<Book>> UpdateUser(int id, Book updatedBook)
+        public async Task<ActionResult<Book>> UpdateBook(int id, Book updatedBook)
         {
             var existingBook = await appDbContext.Book.FindAsync(id);
 
@@ -153,6 +153,5 @@ namespace API.Controllers
 
             return Ok("Book deleted successfully");
         }
-
-    }
+    }       
 }
