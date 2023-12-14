@@ -65,6 +65,32 @@ namespace API.Controllers
             return Ok(existingUser);
         }
 
+        // Change the user's role
+        [HttpPut("ChangeUserRole/{id}")]
+        public async Task<ActionResult<User>> ChangeUserRole(int id, int newRole)
+        {
+            var user = await appDbContext.User.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // 0 = User, 1 = Admin)
+            if (newRole != 0 && newRole != 1) 
+            {
+                return BadRequest("Invalid role");
+            }
+
+            // Update the user's role
+            user.Roles = newRole;
+
+            appDbContext.User.Update(user);
+            await appDbContext.SaveChangesAsync();
+
+            return Ok(user);
+        }
+
         // Delete a user
         [HttpDelete("DeleteUser/{id}")]
         public async Task<ActionResult> DeleteUser(int id)
