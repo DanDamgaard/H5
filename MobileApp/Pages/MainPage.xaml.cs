@@ -6,12 +6,35 @@ namespace MobileApp.Pages;
 public partial class MainPage : ContentPage
 {
     private readonly AuthService _authService = new AuthService();
-
+    private Api api = new Api();
     
     public MainPage()
     {
         InitializeComponent();
-        
+        lateBooksWarning();
+    }
+
+    private async void lateBooksWarning()
+    {
+        List<RentedBook> lateBooks = await api.getOverdueBooks();
+        List<RentedBook> userLateBooks = new List<RentedBook>();
+
+        if (lateBooks.Count > 0 )
+        {
+            foreach(RentedBook rb in lateBooks)
+            {
+                if(rb.UserId == Global.User.Id)
+                {
+                    userLateBooks.Add(rb);
+                }
+            }
+        }
+
+        foreach(RentedBook rb in userLateBooks)
+        {
+            Book book = await api.getBook(rb.BookId);
+            await DisplayAlert("Advarsel", $"{book.Title} skulle være afleveret den {rb.EndDate}", "OK");
+        }
     }
 
     private async void OnCallApiBtnClicked(object sender, EventArgs e)
