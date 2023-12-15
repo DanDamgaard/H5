@@ -12,10 +12,12 @@ namespace MobileApp.Services
     public class Api
     {
         private HttpClient httpClient = new HttpClient();
-        private string baseUrl = DeviceInfo.Platform == DevicePlatform.Android
-        ? "http://10.0.2.2:5131"
-        : "http://localhost:5131";
-        //private string baseUrl = "http://dantdamgaard.dk";
+
+        //private string baseUrl = DeviceInfo.Platform == DevicePlatform.Android
+        //? "http://10.0.2.2:5131"
+        //: "http://localhost:5131";
+
+        private string baseUrl = "http://dantdamgaard.dk";
 
         public async Task<bool> Login(string username, string password)
         {

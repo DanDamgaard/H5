@@ -57,7 +57,7 @@ public partial class UserRentedBooksPage : ContentPage
             hs.Spacing = 5;
 
             VerticalStackLayout vs1 = new VerticalStackLayout();
-            vs1.WidthRequest = 150;
+            vs1.WidthRequest = 140;
 
             VerticalStackLayout vs2 = new VerticalStackLayout();
             vs2.Spacing = 5;
