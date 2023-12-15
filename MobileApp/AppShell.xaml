@@ -11,5 +11,8 @@
     <ShellContent
         Title="Loading"
         ContentTemplate="{DataTemplate Pages:LoadingPage}"/>
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate Pages:LoginPage}"/>
 
 </Shell>
